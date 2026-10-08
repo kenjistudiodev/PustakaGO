@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Koleksi Buku — PustakaGO</title>
+<style>
+:root{
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --serif:ui-serif,"New York","Iowan Old Style",Georgia,serif;
+  --ink:#16251f;--muted:#5f6f67;--green:#1f6b4f;--green2:#2f8a67;--deep:#0e2a21;--gold:#d4a24c;--wine:#7a2e3a;
+  --line:rgba(0,0,0,.09);--track:rgba(120,120,128,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:calc(96px + env(safe-area-inset-bottom));
+  background:radial-gradient(70% 55% at 12% 10%,#2f8a67 0,transparent 65%),radial-gradient(60% 50% at 90% 20%,#8a6a2c 0,transparent 65%),radial-gradient(70% 60% at 60% 100%,#0b1f18 0,transparent 70%),#123a2c;background-attachment:fixed}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid rgba(212,162,76,.8);outline-offset:2px;border-radius:10px}
+
+/* Navbar (sama dengan adminsiswa.html) */
+.nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:8px 10px;padding-top:calc(8px + env(safe-area-inset-top));color:#fff;
+  background:rgba(10,30,22,.6);backdrop-filter:saturate(180%) blur(24px);-webkit-backdrop-filter:saturate(180%) blur(24px);border-bottom:.5px solid rgba(255,255,255,.1)}
+button.brand{text-align:left;color:#fff}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff;background:linear-gradient(160deg,var(--green2),var(--deep));box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 2px 6px rgba(0,0,0,.3)}
+.logo svg{width:20px;height:20px}
+.nm{line-height:1.2;min-width:0}.nm b,.nm small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nm b{display:block;font-size:14px;font-weight:700}.nm small{display:block;font-size:11px;opacity:.75}
+.sp{flex:1}
+/* Dock footer (sama dengan adminsiswa.html) */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom);background:rgba(255,255,255,.84);backdrop-filter:saturate(180%) blur(30px);-webkit-backdrop-filter:saturate(180%) blur(30px);border-top:.5px solid rgba(0,0,0,.1);box-shadow:0 -4px 20px rgba(0,0,0,.18)}
+.dock nav{width:100%;display:flex;justify-content:flex-start;gap:6px;padding:8px 10px;overflow-x:auto}
+.dock nav>:first-child{margin-left:auto}.dock nav>:last-child{margin-right:auto}
+.d{flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:84px;padding:8px 14px;border-radius:16px;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;transition:background .15s,transform .15s}
+.d:hover{background:var(--track);transform:translateY(-3px)}
+.d .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:#fff;box-shadow:0 3px 8px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.35)}
+.d .ic svg{width:21px;height:21px}
+.acct{display:flex;align-items:center;gap:10px;padding:4px 6px 4px 12px;border-radius:99px;background:rgba(255,255,255,.14)}
+.acct div{text-align:right;line-height:1.2}.acct b{display:block;font-size:13px}.acct small{font-size:11px;opacity:.75}
+.avatar{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#2a1c05;background:linear-gradient(160deg,#f0c877,var(--gold))}
+
+/* Layout */
+.wrap{max-width:1180px;margin:0 auto;padding:22px 10px;display:grid;gap:16px}
+.head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:10px;color:#fff}
+h1{font-family:var(--serif);font-size:clamp(28px,4.5vw,38px);letter-spacing:-.02em;line-height:1.1}
+.head p{opacity:.8;font-size:14px;margin-top:4px}
+.chip{font-size:13px;font-weight:600;padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.16);color:#fff}
+.panel{background:rgba(246,241,228,.93);backdrop-filter:saturate(180%) blur(30px);-webkit-backdrop-filter:saturate(180%) blur(30px);border-radius:16px;box-shadow:0 14px 40px rgba(0,0,0,.28),0 0 0 .5px rgba(0,0,0,.14)}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;height:36px;padding:0 16px;display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:10px;font-size:13.5px;font-weight:600;color:#fff;background:linear-gradient(var(--green2),var(--green));box-shadow:0 1px 2px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.25)}
+.btn:hover{filter:brightness(1.06)}.btn:focus-visible{outline:3px solid rgba(212,162,76,.8)}
+.btn.alt{background:rgba(0,0,0,.08);color:var(--ink);box-shadow:none}
+.btn svg{width:16px;height:16px}
+
+/* Hero statistik */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.st{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;background:rgba(246,241,228,.93);box-shadow:0 8px 24px rgba(0,0,0,.2),0 0 0 .5px rgba(0,0,0,.12)}
+.st .ic{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.3)}
+.st .ic svg{width:21px;height:21px}
+.st b{display:block;font-family:var(--serif);font-size:24px;line-height:1.1;color:var(--deep);font-variant-numeric:tabular-nums}
+.st small{font-size:12px;color:var(--muted);font-weight:600}
+
+/* Filter */
+.filter{padding:14px 16px;display:grid;gap:12px}
+.frow{display:flex;gap:10px;flex-wrap:wrap}
+.sbox{position:relative;flex:1;min-width:220px}
+.sbox svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted);pointer-events:none}
+.sbox input{width:100%;height:40px;padding:0 14px 0 38px;border-radius:12px;border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.95);outline:none}
+.frow select{height:40px;padding:0 12px;border-radius:12px;border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.95);outline:none;font-size:14px}
+.sbox input:focus,.frow select:focus{border-color:var(--green2);box-shadow:0 0 0 4px rgba(47,138,103,.25)}
+.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.cats::-webkit-scrollbar{height:6px}.cats::-webkit-scrollbar-thumb{background:rgba(0,0,0,.25);border-radius:9px}
+.cat{flex:none;padding:6px 14px;border-radius:99px;font-size:13px;font-weight:600;background:rgba(0,0,0,.06);color:var(--ink);white-space:nowrap;transition:background .15s,transform .15s}
+.cat:hover{background:rgba(31,107,79,.15)}
+.cat.on{color:#fff;background:linear-gradient(var(--green2),var(--green));box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.cat small{opacity:.7;font-weight:600;margin-left:4px}
+
+/* Grid buku */
+.res{color:#fff;font-size:13.5px;opacity:.85;margin:0 2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(188px,1fr));gap:16px}
+.card{display:flex;flex-direction:column;text-align:left;border-radius:16px;overflow:hidden;background:rgba(246,241,228,.95);box-shadow:0 10px 28px rgba(0,0,0,.28),0 0 0 .5px rgba(0,0,0,.14);transition:transform .2s,box-shadow .2s;animation:rise .45s both}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 38px rgba(0,0,0,.38),0 0 0 .5px rgba(0,0,0,.14)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+.cvw{position:relative;aspect-ratio:3/4;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,#e6f3ec,#c9e3d6)}
+.cvw img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.card:hover .cvw img{transform:scale(1.06)}
+.cvw .ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;height:100%;padding:16px;text-align:center;color:#fff;font-family:var(--serif);font-weight:700;font-size:15px;line-height:1.25;overflow-wrap:anywhere}
+.cvw .ph svg{width:34px;height:34px;opacity:.85}
+.cvw::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.28),transparent 7%),linear-gradient(0deg,rgba(0,0,0,.25),transparent 30%)}
+.bdg{position:absolute;z-index:2;top:10px;left:10px;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:99px;background:#dcefe5;color:#1b5e44;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.bdg.zero{background:#f6dadd;color:#8a2432}.bdg.part{background:#f6e7c8;color:#7a5410}
+.web{position:absolute;z-index:2;top:10px;right:10px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(160deg,#7f9fe0,#3a5ca8);box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.web svg{width:14px;height:14px}
+.cb{padding:12px 14px 14px;display:flex;flex-direction:column;gap:3px;flex:1}
+.ct{font-family:var(--serif);font-size:16px;font-weight:700;line-height:1.25;color:var(--deep);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ca{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cm{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:8px}
+.kt{font-size:11.5px;font-weight:600;padding:2px 9px;border-radius:99px;background:rgba(212,162,76,.22);color:#7a5410;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62%}
+.sk{font-size:12px;font-weight:700;color:var(--green);font-variant-numeric:tabular-nums;white-space:nowrap}
+.empty{padding:40px 20px;text-align:center;color:var(--muted);font-size:14px}
+.empty b{display:block;font-family:var(--serif);font-size:20px;color:var(--deep);margin-bottom:4px}
+.more{display:flex;justify-content:center;padding-top:6px}
+.more .btn{height:40px;padding:0 24px;background:rgba(255,255,255,.2);box-shadow:0 0 0 .5px rgba(255,255,255,.4)}
+
+/* Skeleton */
+.sk-c{border-radius:16px;aspect-ratio:3/5;background:linear-gradient(100deg,rgba(255,255,255,.1) 30%,rgba(255,255,255,.22) 50%,rgba(255,255,255,.1) 70%);background-size:300% 100%;animation:sh 1.3s infinite}
+@keyframes sh{from{background-position:120% 0}to{background-position:-120% 0}}
+
+/* Detail modal */
+.overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:10px;background:rgba(5,20,14,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:60}
+.overlay.on{display:flex}
+.modal{width:100%;max-width:720px;max-height:calc(100% - 20px);overflow:auto;border-radius:18px;background:rgba(248,245,236,.98);box-shadow:0 0 0 .5px rgba(0,0,0,.3),0 30px 80px rgba(0,0,0,.45);animation:pop .22s cubic-bezier(.2,.9,.3,1.2);position:relative}
+@keyframes pop{from{opacity:0;transform:scale(.95) translateY(8px)}}
+.mx{position:absolute;top:10px;right:10px;z-index:3;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.08);font-size:20px;line-height:1}
+.mx:hover{background:rgba(0,0,0,.16)}
+.dt{display:flex;flex-direction:column;align-items:center;gap:20px;padding:28px 24px 24px}
+.dcv{position:relative;width:min(250px,64vw);flex:none;aspect-ratio:3/4;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,#2f8a67,#0e2a21);box-shadow:0 12px 28px rgba(0,0,0,.35)}
+.dcv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.dcv .ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:100%;padding:16px;text-align:center;color:#fff;font-family:var(--serif);font-weight:700;font-size:17px}
+.dcv .ph svg{width:40px;height:40px;opacity:.85}
+.di{width:100%}
+.di h2{font-family:var(--serif);font-size:24px;line-height:1.2;color:var(--deep);text-align:center}
+.di .au{color:var(--muted);font-size:14px;margin:2px 0 10px;text-align:center}
+.tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.tg{font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;background:#dcefe5;color:#1b5e44}
+.tg.g{background:rgba(212,162,76,.22);color:#7a5410}.tg.r{background:#f6dadd;color:#8a2432}.tg.a{background:#f6e7c8;color:#7a5410}
+.dl{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-bottom:16px}
+.dl div{min-width:0}.dl dt{font-size:11.5px;font-weight:600;color:var(--muted)}.dl dd{font-size:14px;font-weight:600;color:var(--deep);overflow-wrap:anywhere}
+.stk{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.75);box-shadow:0 0 0 .5px rgba(0,0,0,.1);margin-bottom:14px;font-size:13.5px}
+.bar{flex:1;height:8px;border-radius:9px;background:var(--track);overflow:hidden}.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--green2),var(--green))}
+.da{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+a.btn{text-decoration:none}
+
+.toast{max-width:calc(100% - 20px);text-align:center;position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:var(--deep);color:#fff;padding:9px 16px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:70}
+.toast.on{opacity:1}
+
+@media (max-width:620px){.acct div{display:none}.acct{padding:3px}.nm small{display:none}.wrap{padding:16px 10px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.dt{padding:24px 16px 18px}.dl{grid-template-columns:1fr}.d{min-width:70px;padding:8px 8px}.ct{font-size:14.5px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <button class="brand" id="home" type="button" aria-label="Ke beranda">
+    <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h6a2 2 0 0 1 2 2v14a3 3 0 0 0-3-3H4V4zm16 0h-6a2 2 0 0 0-2 2v14a3 3 0 0 1 3-3h5V4z"/></svg></span>
+    <span class="nm"><b id="navName">PustakaGO</b><small>Perpustakaan Sekolah</small></span>
+  </button>
+  <span class="sp"></span>
+  <div class="acct" aria-label="Akun masuk"><div><b id="who">Siswa</b><small>Siswa</small></div><span class="avatar" id="av">S</span></div>
+</header>
+
+<main class="wrap">
+  <div class="head"><div><h1>Daftar Koleksi Buku</h1><p id="sub">Jelajahi koleksi perpustakaan sekolah</p></div><span class="chip" id="today"></span></div>
+
+  <section class="stats" id="stats" aria-label="Ringkasan koleksi"></section>
+
+  <section class="panel filter" aria-label="Pencarian dan filter">
+    <div class="frow">
+      <div class="sbox"><span data-i="search" style="display:contents"></span><input id="q" type="search" placeholder="Cari judul, pengarang, penerbit, atau ISBN" aria-label="Cari buku" autocomplete="off"></div>
+      <select id="fs" aria-label="Ketersediaan"><option value="">Semua ketersediaan</option><option value="ada">Tersedia dipinjam</option><option value="habis">Sedang dipinjam semua</option><option value="online">Bisa dibaca online</option></select>
+      <select id="fo" aria-label="Urutkan"><option value="judul">Judul A–Z</option><option value="baru">Terbaru ditambahkan</option><option value="stok">Stok terbanyak</option><option value="tahun">Tahun terbit terbaru</option></select>
+    </div>
+    <div class="cats" id="cats" role="tablist" aria-label="Kategori Dewey"></div>
+  </section>
+
+  <p class="res" id="res" role="status"></p>
+  <section class="grid" id="grid" aria-label="Daftar buku"></section>
+  <div class="more" id="more"></div>
+</main>
+
+<div class="dock">
+  <nav aria-label="Menu perpustakaan">
+    <button class="d" id="dBeranda" type="button"><span class="ic" style="background:linear-gradient(160deg,#4fb98a,#1f6b4f)" data-i="home"></span>Beranda</button>
+  </nav>
+</div>
+
+<div class="overlay" id="ov" role="dialog" aria-modal="true" aria-label="Detail buku"><div class="modal" id="md"></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+
+  /* ===== PENGATURAN ===== */
+  var SB='https://ncfuynsctxxxqiqbzptp.supabase.co/rest/v1/',
+      SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jZnV5bnNjdHh4eHFpcWJ6cHRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMzY1MzUsImV4cCI6MjEwMzcxMjUzNX0.Xy-u2FJuRiwhxOKndHe6suVrItHShGY7WM68bTk9VCk',
+      HD={apikey:SK,Authorization:'Bearer '+SK},TB='daftar_buku',LK='pustakago-buku',
+      HOME='adminsiswa.html',LOGIN='index.html',PAGE=24;
+  var ST=SB.replace('/rest/v1/','/storage/v1/object/');
+
+  var P={
+    home:'<path d="M3 11l9-7 9 7M5 9.500V20h14V9.500M10 20v-6h4v6"/>',
+    search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.500-3.500"/>',
+    book:'<path d="M4 4h6a2 2 0 012 2v14a3 3 0 00-3-3H4zM20 4h-6a2 2 0 00-2 2v14a3 3 0 013-3h5z"/>',
+    layers:'<path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/>',
+    ok:'<path d="M5 12l5 5 9-10"/>',
+    tag:'<path d="M3 12V3h9l9 9-9 9z"/><circle cx="7.500" cy="7.500" r="1.500"/>',
+    globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
+    loan:'<path d="M6 3h12v18l-6-4-6 4z"/>'
+  };
+  var svg=function(n){return'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+P[n]+'</svg>'};
+  document.querySelectorAll('[data-i]').forEach(function(e){e.innerHTML=svg(e.dataset.i)});
+  var esc=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+  function toast(t){var e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove('on')},3200)}
+  var inisial=function(n){return String(n||'?').trim().split(/\s+/).slice(0,2).map(function(w){return w[0]}).join('').toUpperCase()};
+
+  /* ===== SESI: hanya siswa yang sudah login ===== */
+  var U=null;
+  try{U=JSON.parse(sessionStorage.getItem('pustakago_user'))}catch(e){}
+  if(!U||(U.role!=='siswa'&&U.role!=='guru'&&U.role!=='tendik'&&U.role!=='eksternal')||!U.id){location.replace(LOGIN);return}
+  var _lb=U.role==='guru'?'Guru':U.role==='tendik'?'Tenaga Pendidik':U.role==='eksternal'?'Eksternal':'Siswa',_as=$('.acct small');if(_as)_as.textContent=_lb;$('#who').textContent=U.nama||_lb;$('#av').textContent=inisial(U.nama);
+  $('#today').textContent=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  try{var pf=JSON.parse(localStorage.getItem('pustakago-profil'));if(pf&&pf.nama_perpustakaan)$('#navName').textContent=pf.nama_perpustakaan}catch(e){}
+
+  /* ===== NAMA KELAS DEWEY ===== */
+  var DWC={'000':'Karya Umum','100':'Filsafat & Psikologi','200':'Agama','300':'Ilmu Sosial','400':'Bahasa','500':'Sains','600':'Teknologi','700':'Seni & Olahraga','800':'Sastra','900':'Sejarah & Geografi'};
+  var classOf=function(b){var c=String(b.kode_kategori||'').trim().charAt(0);return/\d/.test(c)?c+'00':'-'};
+  var catName=function(b){return b.deskripsi_kategori||DWC[classOf(b)]||'Umum'};
+
+  function fotoUrl(v){v=String(v||'').trim();if(!v)return'';if(/^(https?:|data:|blob:)/i.test(v))return v;return ST+'public/'+v.replace(/^\/+/,'')}
+  var HUE=['#2f8a67,#0e2a21','#8a6a2c,#3a2a0c','#3a5a8c,#14233f','#7a2e3a,#2e1015','#4b7f52,#17321b','#6b4c8a,#271739'];
+  var hue=function(s){var h=0;s=String(s||'');for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return HUE[h%HUE.length]};
+
+  /* ===== DATA ===== */
+  var B=[],cat='',q='',fs='',fo='judul',shown=PAGE;
+  try{B=JSON.parse(localStorage.getItem(LK))||[]}catch(e){B=[]}
+  function visible(){return B.filter(function(b){return b.kondisi!=='Hilang'})}
+  function stok(b){return Math.max(+b.on_stok||0,0)}
+  function pull(off,all){
+    return fetch(SB+TB+'?select=*&order=created_at.asc&limit=1000&offset='+off,{headers:HD})
+      .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+      .then(function(rows){all=all.concat(rows);return rows.length===1000?pull(off+1000,all):all});
+  }
+
+  /* ===== TAMPILAN ===== */
+  function stats(){
+    var l=visible(),eks=l.reduce(function(s,b){return s+(+b.jumlah_buku||0)},0),ada=l.filter(function(b){return stok(b)>0}).length,ks={};
+    l.forEach(function(b){ks[classOf(b)]=1});
+    var it=[[l.length,'Judul buku','book','linear-gradient(160deg,#4fb98a,#1f6b4f)'],[eks,'Eksemplar','layers','linear-gradient(160deg,#6b86b8,#3a5a8c)'],[ada,'Siap dipinjam','ok','linear-gradient(160deg,#f0c877,#c98a1f)'],[Object.keys(ks).length,'Kategori','tag','linear-gradient(160deg,#d6606f,#7a2e3a)']];
+    $('#stats').innerHTML=it.map(function(x){return'<div class="st"><span class="ic" style="background:'+x[3]+'">'+svg(x[2])+'</span><div><b>'+x[0].toLocaleString('id-ID')+'</b><small>'+x[1]+'</small></div></div>'}).join('');
+  }
+  function cats(){
+    var l=visible(),c={};l.forEach(function(b){var k=classOf(b);c[k]=(c[k]||0)+1});
+    var ks=Object.keys(c).sort();
+    $('#cats').innerHTML='<button class="cat'+(cat===''?' on':'')+'" data-c="" type="button" role="tab">Semua<small>'+l.length+'</small></button>'
+      +ks.map(function(k){return'<button class="cat'+(cat===k?' on':'')+'" data-c="'+k+'" type="button" role="tab">'+esc(k==='-'?'Lainnya':(DWC[k]||k))+'<small>'+c[k]+'</small></button>'}).join('');
+  }
+  function list(){
+    var s=q.trim().toLowerCase(),l=visible().filter(function(b){
+      if(cat&&classOf(b)!==cat)return false;
+      if(fs==='ada'&&stok(b)<=0)return false;
+      if(fs==='habis'&&stok(b)>0)return false;
+      if(fs==='online'&&!/^https?:\/\//i.test(b.link_online||''))return false;
+      return!s||[b.judul,b.pengarang,b.penerbit,b.isbn,b.deskripsi_kategori,b.kode_kategori].join(' ').toLowerCase().indexOf(s)>-1;
+    });
+    var nat=function(a,b){return String(a||'').localeCompare(String(b||''),'id',{numeric:true})};
+    if(fo==='judul')l.sort(function(a,b){return nat(a.judul,b.judul)});
+    else if(fo==='baru')l.sort(function(a,b){return nat(b.created_at,a.created_at)});
+    else if(fo==='stok')l.sort(function(a,b){return stok(b)-stok(a)||nat(a.judul,b.judul)});
+    else l.sort(function(a,b){return(+b.tahun_terbit||0)-(+a.tahun_terbit||0)||nat(a.judul,b.judul)});
+    return l;
+  }
+  function badge(b){
+    var s=stok(b),j=+b.jumlah_buku||0;
+    return s<=0?'<span class="bdg zero">Dipinjam semua</span>':s<j?'<span class="bdg part">Tersedia '+s+'</span>':'<span class="bdg">Tersedia</span>';
+  }
+  function coverHtml(b,det){
+    var u=fotoUrl(b.foto_sampul);
+    var ph='<div class="ph" style="background:linear-gradient(160deg,'+hue(b.judul)+')">'+svg('book')+'<span>'+esc(b.judul)+'</span></div>';
+    return u?ph.replace('<div class="ph"','<div class="ph" data-fb="1"').replace('</div>','</div>')+'<img src="'+esc(u)+'" alt="Sampul '+esc(b.judul)+'" loading="lazy" onerror="this.remove()">':ph;
+  }
+  function render(){
+    stats();cats();
+    var l=list(),part=l.slice(0,shown);
+    $('#res').textContent=l.length?('Menampilkan '+part.length.toLocaleString('id-ID')+' dari '+l.length.toLocaleString('id-ID')+' buku'):'';
+    if(!l.length){
+      $('#grid').innerHTML='<div class="panel empty" style="grid-column:1/-1"><b>'+(B.length?'Buku tidak ditemukan':'Belum ada koleksi')+'</b>'+(B.length?'Coba kata kunci atau filter yang lain.':'Koleksi buku akan tampil di sini setelah pustakawan menambahkannya.')+'</div>';
+      $('#more').innerHTML='';return;
+    }
+    $('#grid').innerHTML=part.map(function(b,i){
+      var on=/^https?:\/\//i.test(b.link_online||'');
+      return'<button class="card" type="button" data-id="'+esc(b.id)+'" style="animation-delay:'+Math.min(i%PAGE,12)*35+'ms" aria-label="Lihat detail '+esc(b.judul)+'">'
+        +'<div class="cvw">'+coverHtml(b)+badge(b)+(on?'<span class="web" title="Bisa dibaca online">'+svg('globe')+'</span>':'')+'</div>'
+        +'<div class="cb"><div class="ct">'+esc(b.judul)+'</div><div class="ca">'+esc(b.pengarang||'-')+'</div>'
+        +'<div class="cm"><span class="kt">'+esc(catName(b))+'</span><span class="sk">'+stok(b)+'/'+(+b.jumlah_buku||0)+'</span></div></div></button>';
+    }).join('');
+    $('#more').innerHTML=l.length>shown?'<button class="btn" id="bMore" type="button">Tampilkan lebih banyak ('+(l.length-shown)+')</button>':'';
+  }
+  function skeleton(){$('#grid').innerHTML=new Array(8+1).join('<div class="sk-c"></div>')}
+
+  /* ===== DETAIL ===== */
+  function openDetail(id){
+    var b=B.filter(function(x){return x.id===id})[0];if(!b)return;
+    var s=stok(b),j=+b.jumlah_buku||0,on=/^https?:\/\//i.test(b.link_online||''),pct=j?Math.round(s/j*100):0;
+    var it=[['Penerbit',b.penerbit],['Tahun terbit',b.tahun_terbit],['ISBN',b.isbn],['Kode kategori',b.kode_kategori],['Lokasi rak',b.lokasi_simpan],['Kode inventaris',b.kode_inventaris]];
+    $('#md').innerHTML='<button class="mx" type="button" id="mx" aria-label="Tutup">&times;</button><div class="dt"><div class="dcv">'+coverHtml(b,1)+'</div><div class="di">'
+      +'<h2>'+esc(b.judul)+'</h2><p class="au">oleh '+esc(b.pengarang||'-')+'</p>'
+      +'<div class="tags"><span class="tg g">'+esc(catName(b))+'</span><span class="tg'+(b.kondisi==='Rusak'?' a':'')+'">Kondisi '+esc(b.kondisi||'Baik')+'</span>'+(on?'<span class="tg">Baca online</span>':'')+'</div>'
+      +'<dl class="dl">'+it.map(function(x){return'<div><dt>'+x[0]+'</dt><dd>'+esc(x[1]||'-')+'</dd></div>'}).join('')+'</dl>'
+      +'<div class="stk"><b>'+s+' dari '+j+'</b><span>eksemplar tersedia</span><span class="bar"><i style="width:'+pct+'%"></i></span></div>'
+      +(s<=0||on?'<div class="da">'+(s<=0?'<span class="tg r">Semua eksemplar sedang dipinjam</span>':'')
+      +(on?'<a class="btn" href="'+esc(b.link_online)+'" target="_blank" rel="noopener noreferrer">'+svg('globe')+'Baca online</a>':'')+'</div>':'')
+      +'</div></div>';
+    $('#ov').classList.add('on');$('#mx').focus();
+  }
+  function closeDetail(){$('#ov').classList.remove('on')}
+  $('#ov').addEventListener('mousedown',function(e){if(e.target===this)closeDetail()});
+  $('#md').addEventListener('click',function(e){if(e.target.closest('#mx'))closeDetail()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDetail()});
+
+  /* ===== AKSI ===== */
+  $('#grid').addEventListener('click',function(e){var c=e.target.closest('.card');if(c)openDetail(c.dataset.id)});
+  $('#more').addEventListener('click',function(e){if(e.target.closest('#bMore')){shown+=PAGE;render()}});
+  $('#cats').addEventListener('click',function(e){var c=e.target.closest('.cat');if(!c)return;cat=c.dataset.c;shown=PAGE;render()});
+  var tm;$('#q').addEventListener('input',function(){var v=this.value;clearTimeout(tm);tm=setTimeout(function(){q=v;shown=PAGE;render()},180)});
+  $('#fs').addEventListener('change',function(){fs=this.value;shown=PAGE;render()});
+  $('#fo').addEventListener('change',function(){fo=this.value;shown=PAGE;render()});
+  $('#home').addEventListener('click',function(){location.href=(U&&U.role==='guru'?'adminguru.html':U&&U.role==='tendik'?'admintendik.html':U&&U.role==='eksternal'?'eksternal.html':HOME)});
+  $('#dBeranda').addEventListener('click',function(){location.href=(U&&U.role==='guru'?'adminguru.html':U&&U.role==='tendik'?'admintendik.html':U&&U.role==='eksternal'?'eksternal.html':HOME)});
+
+  /* nama perpustakaan terbaru */
+  fetch(SB+'profil_perpustakaan?select=nama_perpustakaan&order=created_at.asc&limit=1',{headers:HD}).then(function(r){return r.ok?r.json():[]}).then(function(a){if(a&&a[0]&&a[0].nama_perpustakaan)$('#navName').textContent=a[0].nama_perpustakaan}).catch(function(){});
+
+  if(B.length)render();else skeleton();
+  pull(0,[]).then(function(rows){B=rows;try{localStorage.setItem(LK,JSON.stringify(B))}catch(e){}render()})
+    .catch(function(){if(!B.length)render();toast(B.length?'Gagal memuat data terbaru. Menampilkan data tersimpan.':'Gagal memuat koleksi buku. Periksa koneksi internet.')});
+})();
+</script>
+</body>
+</html>

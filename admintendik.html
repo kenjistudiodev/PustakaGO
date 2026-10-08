@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Beranda Tenaga Pendidik — PustakaGO</title>
+<style>
+:root{
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --serif:ui-serif,"New York","Iowan Old Style",Georgia,serif;
+  --ink:#16251f;--muted:#5f6f67;--green:#1f6b4f;--green2:#2f8a67;--deep:#0e2a21;--gold:#d4a24c;--wine:#7a2e3a;
+  --line:rgba(0,0,0,.09);--track:rgba(120,120,128,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:calc(96px + env(safe-area-inset-bottom));
+  background:radial-gradient(70% 55% at 12% 10%,#2f8a67 0,transparent 65%),radial-gradient(60% 50% at 90% 20%,#8a6a2c 0,transparent 65%),radial-gradient(70% 60% at 60% 100%,#0b1f18 0,transparent 70%),#123a2c;background-attachment:fixed}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid rgba(212,162,76,.8);outline-offset:2px;border-radius:10px}
+
+/* Navbar */
+.nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:8px 10px;padding-top:calc(8px + env(safe-area-inset-top));color:#fff;
+  background:rgba(10,30,22,.6);backdrop-filter:saturate(180%) blur(24px);-webkit-backdrop-filter:saturate(180%) blur(24px);border-bottom:.5px solid rgba(255,255,255,.1)}
+button.brand{text-align:left;color:#fff}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff;background:linear-gradient(160deg,var(--green2),var(--deep));box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 2px 6px rgba(0,0,0,.3)}
+.logo svg{width:20px;height:20px}
+.nm{line-height:1.2;min-width:0}.nm b,.nm small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nm b{display:block;font-size:14px;font-weight:700}.nm small{display:block;font-size:11px;opacity:.75}
+.sp{flex:1}
+.acct{display:flex;align-items:center;gap:10px;padding:4px 6px 4px 12px;border-radius:99px;background:rgba(255,255,255,.14)}
+.acct div{text-align:right;line-height:1.2}.acct b{display:block;font-size:13px}.acct small{font-size:11px;opacity:.75}
+.avatar{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#2a1c05;background:linear-gradient(160deg,#f0c877,var(--gold))}
+
+/* Layout */
+.wrap{max-width:1100px;margin:0 auto;padding:22px 10px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:10px;color:#fff}
+h1{font-family:var(--serif);font-size:clamp(28px,4.5vw,38px);letter-spacing:-.02em;line-height:1.1}
+.head p{opacity:.8;font-size:14px;margin-top:4px}
+.chip{font-size:13px;font-weight:600;padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.16);color:#fff}
+.panel{background:rgba(246,241,228,.93);backdrop-filter:saturate(180%) blur(30px);-webkit-backdrop-filter:saturate(180%) blur(30px);border-radius:16px;box-shadow:0 14px 40px rgba(0,0,0,.28),0 0 0 .5px rgba(0,0,0,.14)}
+.box{padding:18px;scroll-margin-top:72px;min-width:0;max-width:100%}
+.bh{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.bh h2{font-size:17px;display:flex;align-items:center;gap:10px}
+.bh h2 .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.3)}
+.bh h2 .ic svg{width:17px;height:17px}
+.empty{padding:22px;text-align:center;color:var(--muted);font-size:14px}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;height:34px;padding:0 16px;display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:10px;font-size:13.5px;font-weight:600;color:#fff;background:linear-gradient(var(--green2),var(--green));box-shadow:0 1px 2px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.25)}
+.btn:hover{filter:brightness(1.06)}.btn:focus-visible{outline:3px solid rgba(212,162,76,.8)}
+.btn.alt{background:rgba(0,0,0,.08);color:var(--ink);box-shadow:none}
+.btn svg{width:16px;height:16px}
+
+/* Data anggota */
+.prof{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center}
+.pav{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-size:28px;font-weight:700;color:#2a1c05;background:linear-gradient(160deg,#f0c877,var(--gold));box-shadow:0 0 0 4px rgba(212,162,76,.3),0 8px 18px rgba(0,0,0,.2)}
+.dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px 18px}
+.dl div{min-width:0}
+.dl dt{font-size:12px;font-weight:600;color:var(--muted)}
+.dl dd{font-size:15px;font-weight:600;color:var(--deep);overflow-wrap:anywhere}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.t-ok{background:#dcefe5;color:#1b5e44}.t-late{background:#f6dadd;color:#8a2432}.t-done{background:#e9e7df;color:#5f6f67}
+
+/* Kartu Tanda Anggota */
+.ktawrap{container-type:inline-size;width:100%;max-width:470px;margin:4px auto 0}
+.kta{position:relative;overflow:hidden;aspect-ratio:1.586;display:flex;flex-direction:column;justify-content:space-between;padding:5.2cqw 5.6cqw 4.6cqw;border-radius:5cqw;color:#fff;
+  background:linear-gradient(135deg,#2f8a67 0%,#1f6b4f 28%,#0e2a21 72%,#0b1f18 100%);
+  box-shadow:0 22px 44px rgba(0,0,0,.4),0 0 0 .4cqw rgba(255,255,255,.18) inset,0 .5cqw 0 rgba(255,255,255,.35) inset;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.kta::before{content:"";position:absolute;right:-18cqw;top:-26cqw;width:62cqw;height:62cqw;border-radius:50%;border:5cqw solid rgba(212,162,76,.28);box-shadow:0 0 0 5cqw rgba(212,162,76,.12),0 0 0 11cqw rgba(212,162,76,.07)}
+.kta::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.17) 46%,rgba(255,224,160,.14) 52%,transparent 68%);background-size:240% 100%;background-position:130% 0;animation:shine 6s ease-in-out infinite}
+@keyframes shine{0%,55%{background-position:130% 0}100%{background-position:-60% 0}}
+.kdeco{position:absolute;left:-6cqw;bottom:-12cqw;width:50cqw;height:50cqw;opacity:.1;color:#fff}
+.kdeco svg{width:100%;height:100%}
+.kta>*:not(.kdeco){position:relative;z-index:1}
+.k-top{display:flex;align-items:center;gap:2.8cqw}
+.k-logo{flex:none;width:9.6cqw;height:9.6cqw;border-radius:2.6cqw;display:grid;place-items:center;overflow:hidden;background:rgba(255,255,255,.16);box-shadow:inset 0 .3cqw 0 rgba(255,255,255,.4)}
+.k-logo svg{width:5.8cqw;height:5.8cqw}.k-logo img{width:100%;height:100%;object-fit:contain;background:#fff}
+.k-org{min-width:0;line-height:1.2}
+.k-org b{display:block;font-size:4cqw;font-weight:700;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k-org small{display:block;font-size:2.7cqw;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k-badge{margin-left:auto;flex:none;font-size:2.5cqw;font-weight:800;letter-spacing:.12em;padding:.9cqw 2.8cqw;border-radius:99px;color:#2a1c05;background:linear-gradient(160deg,#f6d38a,var(--gold))}
+.k-title{margin-top:2.2cqw;font-size:2.6cqw;font-weight:700;letter-spacing:.2em;color:#f6d38a}
+.k-mid{display:flex;align-items:center;gap:4cqw;min-width:0}
+.k-av{flex:none;width:17cqw;height:17cqw;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-size:6.4cqw;font-weight:700;color:#2a1c05;background:linear-gradient(160deg,#f6d38a,var(--gold));box-shadow:0 0 0 .9cqw rgba(246,211,138,.45),0 1.2cqw 3cqw rgba(0,0,0,.35)}
+.k-info{min-width:0;flex:1}
+.k-info b{display:block;font-family:var(--serif);font-size:5.4cqw;line-height:1.15;letter-spacing:-.01em;overflow-wrap:anywhere;text-shadow:0 .3cqw 1cqw rgba(0,0,0,.35)}
+.k-info dl{display:flex;gap:4.5cqw;margin-top:1.8cqw}
+.k-info dt{font-size:2.3cqw;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.k-info dd{font-size:3.5cqw;font-weight:700;font-variant-numeric:tabular-nums}
+.k-chip{flex:none;align-self:flex-start;width:9cqw;height:7cqw;border-radius:1.4cqw;background:linear-gradient(135deg,#f6d38a,#b98424);box-shadow:inset 0 0 0 .3cqw rgba(0,0,0,.25);position:relative}
+.k-chip::before,.k-chip::after{content:"";position:absolute;left:0;right:0;height:.3cqw;background:rgba(0,0,0,.25)}
+.k-chip::before{top:33%}.k-chip::after{top:66%}
+.k-bot{display:flex;align-items:flex-end;justify-content:space-between;gap:3cqw}
+.k-bar{background:#fff;border-radius:1.6cqw;padding:1.6cqw 2.4cqw 1cqw;width:56%;text-align:center;color:var(--deep)}
+.k-bar svg{display:block;width:100%;height:7.6cqw}
+.k-bar small{display:block;font-size:2.3cqw;letter-spacing:.3em;font-weight:700;margin-top:.6cqw;font-variant-numeric:tabular-nums}
+.k-valid{font-size:2.3cqw;line-height:1.35;text-align:right;opacity:.85}
+.k-valid b{display:block;font-size:2.7cqw;color:#f6d38a}
+.knote{text-align:center;font-size:12.5px;color:var(--muted);margin-top:12px}
+
+/* Peminjaman */
+.sum{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.sum div{display:flex;align-items:baseline;gap:8px;padding:8px 14px;border-radius:12px;background:rgba(255,255,255,.7);box-shadow:0 0 0 .5px rgba(0,0,0,.1)}
+.sum b{font-family:var(--serif);font-size:22px;color:var(--deep);font-variant-numeric:tabular-nums}.sum small{font-size:12.5px;color:var(--muted);font-weight:600}
+.sum .warn b{color:#8a2432}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.tw::-webkit-scrollbar{height:8px}.tw::-webkit-scrollbar-thumb{background:rgba(0,0,0,.28);border-radius:9px}.tw::-webkit-scrollbar-track{background:transparent}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:720px}
+th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:12px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 16px;border-bottom:1px solid rgba(0,0,0,.05)}tr:last-child td{border:0}
+td small.sub{display:block;font-size:11.5px;color:var(--muted)}
+
+/* Dock footer */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom);background:rgba(255,255,255,.84);backdrop-filter:saturate(180%) blur(30px);-webkit-backdrop-filter:saturate(180%) blur(30px);border-top:.5px solid rgba(0,0,0,.1);box-shadow:0 -4px 20px rgba(0,0,0,.18)}
+.dock nav{width:100%;display:flex;justify-content:flex-start;gap:6px;padding:8px 10px;overflow-x:auto}
+.dock nav>:first-child{margin-left:auto}.dock nav>:last-child{margin-right:auto}
+.d{flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:84px;padding:8px 14px;border-radius:16px;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;transition:background .15s,transform .15s}
+.d:hover{background:var(--track);transform:translateY(-3px)}
+.d .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:#fff;box-shadow:0 3px 8px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.35)}
+.d .ic svg{width:21px;height:21px}
+
+.toast{max-width:calc(100% - 20px);text-align:center;position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:var(--deep);color:#fff;padding:9px 16px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:70}
+.toast.on{opacity:1}
+
+/* Modal riwayat peminjaman */
+.overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:10px;background:rgba(5,20,14,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:60}
+.overlay.on{display:flex}
+.modal{position:relative;width:100%;max-width:880px;max-height:calc(100% - 20px);overflow:auto;border-radius:18px;background:rgba(248,245,236,.98);box-shadow:0 0 0 .5px rgba(0,0,0,.3),0 30px 80px rgba(0,0,0,.45);animation:pop .22s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{opacity:0;transform:scale(.95) translateY(8px)}}
+.mh{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:16px 18px;background:rgba(248,245,236,.97);border-bottom:1px solid var(--line)}
+.mh .ic{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff;background:linear-gradient(160deg,#f0c877,#c98a1f);box-shadow:0 2px 6px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.3)}
+.mh .ic svg{width:20px;height:20px}
+.mh h2{font-family:var(--serif);font-size:20px;color:var(--deep);line-height:1.2}
+.mh small{display:block;font-size:12.5px;color:var(--muted)}
+.mx{margin-left:auto;flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.08);font-size:20px;line-height:1}
+.mx:hover{background:rgba(0,0,0,.16)}
+.mb{padding:16px 18px 18px}
+
+@media (max-width:520px){.acct div{display:none}.acct{padding:3px}.nm small{display:none}.d{flex:1 1 0;min-width:0;padding:6px 2px;font-size:11px;line-height:1.2;text-align:center;white-space:normal}.dock nav{gap:2px;padding:6px 5px}.wrap{padding:16px 5px}.box{padding:14px}.overlay{padding:5px}.mb,.mh{padding-left:12px;padding-right:12px}.prof{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}.pav{width:68px;height:68px;font-size:24px}.dl{text-align:left}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  body{background:#fff;padding:0}
+  body>*:not(main){display:none!important}
+  main>*:not(.printkta){display:none!important}
+  .printkta{box-shadow:none!important;background:none!important;padding:0!important}
+  .printkta .bh,.printkta .knote{display:none!important}
+  .ktawrap{max-width:92mm;margin:10mm auto}
+  .kta::after{animation:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <button class="brand" id="home" type="button" aria-label="Ke atas">
+    <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h6a2 2 0 0 1 2 2v14a3 3 0 0 0-3-3H4V4zm16 0h-6a2 2 0 0 0-2 2v14a3 3 0 0 1 3-3h5V4z"/></svg></span>
+    <span class="nm"><b id="navName">PustakaGO</b><small>Perpustakaan Sekolah</small></span>
+  </button>
+  <span class="sp"></span>
+  <div class="acct" aria-label="Akun masuk"><div><b id="who">Tenaga Pendidik</b><small>Tenaga Pendidik</small></div><span class="avatar" id="av">T</span></div>
+</header>
+
+<main class="wrap" id="content">
+  <div class="head"><div><h1>Beranda Tenaga Pendidik</h1><p id="sub">Selamat datang di perpustakaan</p></div><span class="chip" id="today"></span></div>
+
+  <!-- Data anggota -->
+  <section class="panel box" aria-labelledby="hAng">
+    <div class="bh"><h2 id="hAng"><span class="ic" style="background:linear-gradient(160deg,#d6606f,#7a2e3a)" data-i="user"></span>Data Anggota</h2><span class="tag t-ok">Anggota aktif</span></div>
+    <div class="prof">
+      <div class="pav" id="pAv">T</div>
+      <dl class="dl" id="dAng"></dl>
+    </div>
+  </section>
+
+  <!-- Kartu Tanda Anggota -->
+  <section class="panel box printkta" aria-labelledby="hKta">
+    <div class="bh"><h2 id="hKta"><span class="ic" style="background:linear-gradient(160deg,#f0c877,#c98a1f)" data-i="card"></span>Kartu Tanda Anggota Perpustakaan</h2><button class="btn alt" id="print" type="button"><span data-i="print" style="display:contents"></span>Cetak kartu</button></div>
+    <div class="ktawrap">
+      <div class="kta" id="kta" aria-label="Kartu Tanda Anggota Perpustakaan">
+        <div class="kdeco" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h6a2 2 0 0 1 2 2v14a3 3 0 0 0-3-3H4V4zm16 0h-6a2 2 0 0 0-2 2v14a3 3 0 0 1 3-3h5V4z"/></svg></div>
+        <div class="k-top">
+          <span class="k-logo" id="kLogo"><svg viewBox="0 0 24 24" fill="#fff"><path d="M4 4h6a2 2 0 0 1 2 2v14a3 3 0 0 0-3-3H4V4zm16 0h-6a2 2 0 0 0-2 2v14a3 3 0 0 1 3-3h5V4z"/></svg></span>
+          <div class="k-org"><b id="kOrg">Perpustakaan Sekolah</b><small id="kSch">PustakaGO</small></div>
+          <span class="k-badge">TENDIK</span>
+        </div>
+        <div class="k-title">KARTU TANDA ANGGOTA PERPUSTAKAAN</div>
+        <div class="k-mid">
+          <span class="k-av" id="kAv">T</span>
+          <div class="k-info"><b id="kNama">-</b><dl><div><dt>NIP / NIK</dt><dd id="kNisn">-</dd></div><div><dt>Jabatan</dt><dd id="kKelas">-</dd></div></dl></div>
+          <span class="k-chip" aria-hidden="true"></span>
+        </div>
+        <div class="k-bot">
+          <div class="k-bar"><span id="kBar"></span><small id="kBarTxt"></small></div>
+          <div class="k-valid"><b>Anggota sejak</b><span id="kSince">-</span><br>Berlaku selama masih<br>terdaftar sebagai tenaga pendidik</div>
+        </div>
+      </div>
+    </div>
+    <p class="knote">Tunjukkan kartu ini kepada pustakawan saat meminjam atau mengembalikan buku.</p>
+  </section>
+
+  <!-- Peminjaman -->
+  <section class="panel box" aria-labelledby="hPin">
+    <div class="bh"><h2 id="hPin"><span class="ic" style="background:linear-gradient(160deg,#6b86b8,#3a5a8c)" data-i="loan"></span>Data Peminjaman</h2></div>
+    <div class="sum" id="sum"></div>
+    <div class="tw" id="pin"><div class="empty">Memuat data peminjaman…</div></div>
+  </section>
+</main>
+
+<div class="dock">
+  <nav aria-label="Menu tenaga pendidik">
+    <button class="d" id="mBuku" type="button"><span class="ic" style="background:linear-gradient(160deg,#4fb98a,#1f6b4f)" data-i="book"></span>Daftar Koleksi Buku</button>
+    <button class="d" id="mPinjam" type="button"><span class="ic" style="background:linear-gradient(160deg,#f0c877,#c98a1f)" data-i="history"></span>Riwayat Peminjaman</button>
+    <button class="d" id="mBaca" type="button"><span class="ic" style="background:linear-gradient(160deg,#6b86b8,#3a5a8c)" data-i="read"></span>Baca Online</button>
+    <button class="d" id="out" type="button"><span class="ic" style="background:linear-gradient(160deg,#e0707a,#a52c3b)" data-i="logout"></span>Log Out</button>
+  </nav>
+</div>
+
+<div class="overlay" id="hov" role="dialog" aria-modal="true" aria-labelledby="hTitle">
+  <div class="modal">
+    <div class="mh"><span class="ic" data-i="history"></span><div><h2 id="hTitle">Riwayat Peminjaman</h2><small id="hWho"></small></div><button class="mx" id="hx" type="button" aria-label="Tutup">&times;</button></div>
+    <div class="mb"><div class="sum" id="hSum"></div><div class="tw" id="hTbl"></div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+
+  /* ===== PENGATURAN ===== */
+  var SBR='https://ncfuynsctxxxqiqbzptp.supabase.co/rest/v1/',
+      SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jZnV5bnNjdHh4eHFpcWJ6cHRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMzY1MzUsImV4cCI6MjEwMzcxMjUzNX0.Xy-u2FJuRiwhxOKndHe6suVrItHShGY7WM68bTk9VCk',
+      HD={apikey:SK,Authorization:'Bearer '+SK};
+  /* Halaman tujuan menu footer: ubah bila nama file berbeda */
+  var MENU={buku:'koleksibuku.html',baca:'bacaonline.html'},LOGIN='index.html';
+
+  var P={
+    user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.500-6.500 8-6.500s8 2.500 8 6.500"/>',
+    card:'<rect x="2.500" y="5" width="19" height="14" rx="2.500"/><path d="M2.500 10h19M6.500 15h4"/>',
+    loan:'<path d="M6 3h12v18l-6-4-6 4z"/>',
+    history:'<path d="M3 12a9 9 0 1 0 3-6.700M3 4v5h5M12 7v5l3 2"/>',
+    book:'<path d="M4 4h6a2 2 0 012 2v14a3 3 0 00-3-3H4zM20 4h-6a2 2 0 00-2 2v14a3 3 0 013-3h5z"/>',
+    read:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M9 8.500h6M9 11.500h4"/>',
+    logout:'<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>',
+    print:'<path d="M6 9V3h12v6M6 18H4a1 1 0 01-1-1v-6a2 2 0 012-2h14a2 2 0 012 2v6a1 1 0 01-1 1h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/>'
+  };
+  var svg=function(n){return'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+P[n]+'</svg>'};
+  document.querySelectorAll('[data-i]').forEach(function(e){e.innerHTML=svg(e.dataset.i)});
+  var esc=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+  function toast(t){var e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove('on')},2800)}
+  function iso(d){var m=d.getMonth()+1,n=d.getDate();return d.getFullYear()+'-'+(m<10?'0':'')+m+'-'+(n<10?'0':'')+n}
+  function fmt(s){return s?new Date(String(s).slice(0,10)+'T00:00:00').toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'-'}
+  var inisial=function(n){return String(n||'?').trim().split(/\s+/).slice(0,2).map(function(w){return w[0]}).join('').toUpperCase()};
+
+  /* ===== SESI: hanya tenaga pendidik yang sudah login dari index.html ===== */
+  function logout(){try{sessionStorage.removeItem('pustakago_user')}catch(e){}location.replace(LOGIN)}
+  var U=null;
+  try{U=JSON.parse(sessionStorage.getItem('pustakago_user'))}catch(e){}
+  if(!U||U.role!=='tendik'||!U.id){location.replace(LOGIN);return}
+
+  /* ===== TAMPILAN ===== */
+  $('#today').textContent=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  function renderAnggota(){
+    var n=U.nama||'Tenaga Pendidik';
+    $('#who').textContent=n;$('#av').textContent=inisial(n);$('#pAv').textContent=inisial(n);
+    $('#sub').textContent='Selamat datang, '+n.split(/\s+/)[0]+'.';
+    var it=[['Nama lengkap',n],['NIP / NIK',U.nip_nik],['Jabatan',U.jabatan],['Telepon',U.kontak],['Alamat',U.alamat],['Jenis anggota','Tenaga Pendidik'],['Anggota sejak',U.created_at?fmt(U.created_at):'']];
+    $('#dAng').innerHTML=it.map(function(x){return'<div><dt>'+esc(x[0])+'</dt><dd>'+esc(x[1]||'-')+'</dd></div>'}).join('');
+    /* kartu */
+    $('#kNama').textContent=n;$('#kAv').textContent=inisial(n);$('#kNisn').textContent=U.nip_nik||'-';$('#kKelas').textContent=U.jabatan||'-';
+    $('#kSince').textContent=U.created_at?fmt(U.created_at):'-';
+    $('#kBar').innerHTML=barcode(U.nip_nik);$('#kBarTxt').textContent=String(U.nip_nik||'').replace(/[^0-9]/g,'');
+    $('#kta').setAttribute('aria-label','Kartu Tanda Anggota Perpustakaan '+n);
+  }
+
+  /* Barcode Code 39 dari NIP / NIK (angka) */
+  var C39={'0':'nnnwwnwnn','1':'wnnwnnnnw','2':'nnwwnnnnw','3':'wnwwnnnnn','4':'nnnwwnnnw','5':'wnnwwnnnn','6':'nnwwwnnnn','7':'nnnwnnwnw','8':'wnnwnnwnn','9':'nnwwnnwnn','*':'nwnnwnwnn'};
+  function barcode(t){
+    t=String(t||'').replace(/[^0-9]/g,'');if(!t)return'';
+    var s='*'+t+'*',x=0,r='',i,j,pat,w;
+    for(i=0;i<s.length;i++){
+      pat=C39[s.charAt(i)];
+      for(j=0;j<9;j++){w=pat.charAt(j)==='w'?3:1;if(j%2===0)r+='<rect x="'+x+'" y="0" width="'+w+'" height="40"/>';x+=w}
+      if(i<s.length-1)x+=1;
+    }
+    return'<svg viewBox="0 0 '+x+' 40" preserveAspectRatio="none" fill="#0e2a21" shape-rendering="crispEdges" aria-hidden="true">'+r+'</svg>';
+  }
+
+  /* Profil perpustakaan: nama + logo untuk navbar dan kartu */
+  function applyProfil(p){
+    var org=p.nama_perpustakaan;
+    if(org){$('.nm b').textContent=org;$('#kOrg').textContent=org}
+    if(p.nama_sekolah)$('#kSch').textContent=p.nama_sekolah;
+    if(p.logo){var im=new Image();im.alt='';im.onload=function(){$('#kLogo').innerHTML='';$('#kLogo').appendChild(im)};im.src=p.logo}
+  }
+  try{var pc=JSON.parse(localStorage.getItem('pustakago-profil'));if(pc)applyProfil(pc)}catch(e){}
+
+  /* ===== DATA SUPABASE ===== */
+  function http(r){
+    if(r.ok)return r.json();
+    return r.text().then(function(t){var j={};try{j=JSON.parse(t)}catch(e){}var er=new Error(j.message||('HTTP '+r.status));er.status=r.status;throw er});
+  }
+  function get(path){return fetch(SBR+path,{headers:HD}).then(http)}
+  var pick=function(o,ks){for(var i=0;i<ks.length;i++){var v=o[ks[i]];if(v!=null&&String(v).trim()!=='')return String(v).trim()}return''};
+
+  /* muat ulang data tendik dari anggota_tendik (tanpa kolom password) */
+  function loadAnggota(){
+    return get('anggota_tendik?select=id,nama,nip_nik,jabatan,kontak,alamat,created_at&id=eq.'+encodeURIComponent(U.id)+'&limit=1').then(function(a){
+      if(!a||!a[0]){toast('Data anggota tidak ditemukan. Silakan masuk kembali.');setTimeout(logout,1800);return false}
+      U=Object.assign({},U,a[0]);
+      try{sessionStorage.setItem('pustakago_user',JSON.stringify(U))}catch(e){}
+      renderAnggota();return true;
+    }).catch(function(){toast('Gagal memuat data anggota terbaru. Menampilkan data saat login.');return true});
+  }
+  function loadProfil(){
+    return get('profil_perpustakaan?select=*&order=created_at.asc&limit=1').then(function(a){
+      var p=a&&a[0];if(!p)return;applyProfil(p);
+      try{var c=JSON.parse(localStorage.getItem('pustakago-profil'))||{};c.nama_perpustakaan=p.nama_perpustakaan||c.nama_perpustakaan;localStorage.setItem('pustakago-profil',JSON.stringify(c))}catch(e){}
+    }).catch(function(){});
+  }
+
+  /* peminjaman milik tendik ini: dicari lewat nama_anggota, lalu disaring agar tidak tercampur anggota lain bernama sama */
+  function mine(r){
+    /* validasi nama: harus sama dengan tendik yang login */
+    var nm=pick(r,['nama_anggota','nama']);
+    if(nm&&nm.toLowerCase()!==String(U.nama||'').trim().toLowerCase())return false;
+    /* validasi NIP/NIK: bila baris peminjaman menyimpan nomor anggota, harus sama dengan NIP/NIK tendik yang login */
+    var nv=pick(r,['nip_nik','nip','nomor_anggota','no_induk']);if(nv)return nv===String(U.nip_nik||'').trim();
+    var idv=pick(r,['anggota_id','id_anggota','anggota']);if(idv)return idv===String(U.id);
+    var t=pick(r,['anggota_tipe']);return!t||t==='Tenaga Kependidikan'||t==='Tendik';
+  }
+  var late=function(p){return!p.tgl_kembali&&p.tgl_tempo&&String(p.tgl_tempo).slice(0,10)<iso(new Date())};
+  var stt=function(p){return p.tgl_kembali?'Dikembalikan':late(p)?'Terlambat':'Dipinjam'};
+  var tagOf=function(p){var x=stt(p);return'<span class="tag '+(x==='Terlambat'?'t-late':x==='Dikembalikan'?'t-done':'t-ok')+'">'+x+'</span>'};
+  var lateDays=function(p){if(!p.tgl_tempo)return 0;return Math.max(0,Math.round((Date.parse(String(p.tgl_kembali||iso(new Date())).slice(0,10))-Date.parse(String(p.tgl_tempo).slice(0,10)))/864e5))};
+
+  function renderPin(rows){
+    var op=rows.filter(function(p){return!p.tgl_kembali}),lt=op.filter(late);
+    $('#sum').innerHTML='<div><b>'+rows.length+'</b><small>Total peminjaman</small></div><div><b>'+op.length+'</b><small>Sedang dipinjam</small></div><div class="'+(lt.length?'warn':'')+'"><b>'+lt.length+'</b><small>Terlambat</small></div>';
+    if(!rows.length){$('#pin').innerHTML='<div class="empty">Belum ada riwayat peminjaman. Pilih Daftar Koleksi Buku di bawah untuk melihat buku yang tersedia.</div>';return}
+    $('#pin').innerHTML='<table><thead><tr>'+['Buku','Jml','Dipinjam','Tenggat','Dikembalikan','Terlambat','Status'].map(function(h){return'<th>'+h+'</th>'}).join('')+'</tr></thead><tbody>'
+      +rows.map(function(p){var d=lateDays(p);
+        return'<tr><td><b>'+esc(p.judul_buku||'-')+'</b>'+(p.kode_inventaris?'<small class="sub">'+esc(p.kode_inventaris)+'</small>':'')+'</td><td style="text-align:center">'+esc(p.jumlah==null?1:p.jumlah)+'</td><td>'+fmt(p.tgl_pinjam)+'</td><td>'+fmt(p.tgl_tempo)+'</td><td>'+fmt(p.tgl_kembali)+'</td><td>'+(d?d+' hari':'-')+'</td><td>'+tagOf(p)+'</td></tr>'}).join('')
+      +'</tbody></table>';
+  }
+  function loadPin(){
+    $('#pin').innerHTML='<div class="empty">Memuat data peminjaman…</div>';
+    return get('peminjaman?select=*&nama_anggota=eq.'+encodeURIComponent(U.nama)+'&order=created_at.desc&limit=1000').then(function(rows){
+      renderPin((rows||[]).filter(mine));
+    }).catch(function(e){
+      $('#sum').innerHTML='';
+      $('#pin').innerHTML='<div class="empty">Gagal memuat data peminjaman ('+esc(e.message)+').<br><button class="btn alt" id="retry" type="button" style="margin-top:10px">Coba lagi</button></div>';
+      $('#retry').onclick=loadPin;
+    });
+  }
+
+  /* ===== MODAL RIWAYAT PEMINJAMAN ===== */
+  function histHtml(rows){
+    var op=rows.filter(function(p){return!p.tgl_kembali}),lt=op.filter(late),dn=rows.length-op.length;
+    $('#hSum').innerHTML='<div><b>'+rows.length+'</b><small>Total peminjaman</small></div><div><b>'+op.length+'</b><small>Sedang dipinjam</small></div><div><b>'+dn+'</b><small>Sudah dikembalikan</small></div><div class="'+(lt.length?'warn':'')+'"><b>'+lt.length+'</b><small>Terlambat</small></div>';
+    if(!rows.length){$('#hTbl').innerHTML='<div class="empty">Belum ada riwayat peminjaman atas nama Anda.</div>';return}
+    $('#hTbl').innerHTML='<table><thead><tr>'+['No','Buku','Jml','Dipinjam','Tenggat','Dikembalikan','Terlambat','Status'].map(function(h){return'<th>'+h+'</th>'}).join('')+'</tr></thead><tbody>'
+      +rows.map(function(p,i){var d=lateDays(p);
+        return'<tr><td>'+(i+1)+'</td><td><b>'+esc(p.judul_buku||'-')+'</b>'+(p.kode_inventaris?'<small class="sub">'+esc(p.kode_inventaris)+'</small>':'')+'</td><td style="text-align:center">'+esc(p.jumlah==null?1:p.jumlah)+'</td><td>'+fmt(p.tgl_pinjam)+'</td><td>'+fmt(p.tgl_tempo)+'</td><td>'+fmt(p.tgl_kembali)+'</td><td>'+(d?d+' hari':'-')+'</td><td>'+tagOf(p)+'</td></tr>'}).join('')
+      +'</tbody></table>';
+  }
+  function loadHist(){
+    $('#hSum').innerHTML='';$('#hTbl').innerHTML='<div class="empty">Memuat riwayat peminjaman…</div>';
+    return get('peminjaman?select=*&nama_anggota=eq.'+encodeURIComponent(U.nama)+'&order=created_at.desc&limit=1000').then(function(rows){
+      histHtml((rows||[]).filter(mine));
+    }).catch(function(e){
+      $('#hSum').innerHTML='';
+      $('#hTbl').innerHTML='<div class="empty">Gagal memuat riwayat peminjaman ('+esc(e.message)+').<br><button class="btn alt" id="hretry" type="button" style="margin-top:10px">Coba lagi</button></div>';
+      $('#hretry').onclick=loadHist;
+    });
+  }
+  function openHist(){
+    $('#hWho').textContent=(U.nama||'Tenaga Pendidik')+(U.nip_nik?' · NIP/NIK '+U.nip_nik:'');
+    $('#hov').classList.add('on');$('#hx').focus();loadHist();
+  }
+  function closeHist(){$('#hov').classList.remove('on')}
+  $('#hx').addEventListener('click',closeHist);
+  $('#hov').addEventListener('mousedown',function(e){if(e.target===this)closeHist()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeHist()});
+
+  /* ===== AKSI ===== */
+  $('#home').addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  $('#mBuku').addEventListener('click',function(){location.href=MENU.buku});
+  $('#mPinjam').addEventListener('click',openHist);
+  $('#mBaca').addEventListener('click',function(){location.href=MENU.baca});
+  $('#out').addEventListener('click',logout);
+  $('#print').addEventListener('click',function(){window.print()});
+  window.addEventListener('pageshow',function(e){if(e.persisted){var s=null;try{s=JSON.parse(sessionStorage.getItem('pustakago_user'))}catch(x){}if(!s||s.role!=='tendik')location.replace(LOGIN);else loadPin()}});
+
+  renderAnggota();
+  loadProfil();
+  loadAnggota().then(function(ok){if(ok!==false)loadPin()});
+})();
+</script>
+</body>
+</html>

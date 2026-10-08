@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PustakaGO — Perpustakaan Sekolah</title>
+<style>
+:root{
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --serif:ui-serif,"New York","Iowan Old Style",Georgia,"Times New Roman",serif;
+  --ink:#16251f; --muted:#5f6f67; --paper:#f6f1e4;
+  --green:#1f6b4f; --green2:#2f8a67; --deep:#0e2a21; --gold:#d4a24c; --wine:#7a2e3a;
+}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{
+  font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(70% 55% at 12% 10%,#2f8a67 0,transparent 65%),
+    radial-gradient(60% 50% at 90% 20%,#8a6a2c 0,transparent 65%),
+    radial-gradient(70% 60% at 60% 100%,#0b1f18 0,transparent 70%),
+    #123a2c;
+  background-attachment:fixed;display:flex;flex-direction:column;overflow-x:hidden;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+button{font:inherit}
+:focus-visible{outline:3px solid rgba(212,162,76,.7);outline-offset:2px}
+
+/* Menu bar */
+.menubar{height:30px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:13px;color:#fff;
+  background:rgba(10,30,22,.55);-webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);border-bottom:1px solid rgba(255,255,255,.08)}
+.menubar .l,.menubar .r{display:flex;align-items:center;gap:16px}
+.menubar b{font-weight:600}.menubar .dim{opacity:.8}
+.pill{all:unset;cursor:pointer;background:var(--gold);color:#2a1c05;font-size:12px;font-weight:700;padding:3px 12px;border-radius:999px}
+.pill:hover{filter:brightness(1.08)}
+
+/* Hero window */
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:28px 16px}
+.window{width:100%;max-width:940px;border-radius:14px;overflow:hidden;background:rgba(246,241,228,.9);
+  -webkit-backdrop-filter:blur(40px);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,.5);
+  box-shadow:0 0 0 .5px rgba(0,0,0,.3),0 30px 70px rgba(0,0,0,.4),0 8px 20px rgba(0,0,0,.2)}
+.titlebar{height:40px;display:flex;align-items:center;padding:0 14px;position:relative;background:rgba(255,255,255,.4);border-bottom:1px solid rgba(0,0,0,.08)}
+.lights{display:flex;gap:8px}.lights i{width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.2)}
+.lights i:nth-child(1){background:#ff5f57}.lights i:nth-child(2){background:#febc2e}.lights i:nth-child(3){background:#28c840}
+.titlebar span{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;font-weight:600;color:var(--muted);pointer-events:none}
+
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;padding:38px 38px 30px}
+.badge{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--green);margin-bottom:14px}
+.badge .app{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(160deg,var(--green2),var(--deep));box-shadow:0 2px 6px rgba(14,42,33,.4)}
+.badge svg{width:15px;height:15px}
+h1{font-family:var(--serif);font-size:clamp(32px,5vw,50px);line-height:1.05;letter-spacing:-.02em;font-weight:700;color:var(--deep)}
+.lead{font-size:16px;line-height:1.55;color:var(--muted);margin:14px 0 22px;max-width:46ch}
+.spot{display:flex;align-items:center;gap:10px;height:46px;padding:0 16px;border-radius:12px;background:#fff;border:1px solid rgba(0,0,0,.1);
+  box-shadow:0 4px 14px rgba(0,0,0,.08);max-width:440px;cursor:text}
+.spot svg{width:18px;height:18px;color:var(--muted);flex:none}
+.spot input{all:unset;flex:1;font-size:15px;color:var(--ink);min-width:0}
+.spot input::placeholder{color:#8a968f}
+.cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;height:40px;padding:0 22px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:9px;font-size:14px;font-weight:600}
+.btn.main{color:#fff;background:linear-gradient(var(--green2),var(--green));box-shadow:0 1px 2px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.25)}
+.btn.alt{color:var(--deep);background:rgba(0,0,0,.06)}
+.btn:hover{filter:brightness(1.06)}.btn:active{filter:brightness(.93)}
+
+.widgets{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:center}
+.w{border-radius:16px;padding:14px;background:#fff;border:1px solid rgba(0,0,0,.06);box-shadow:0 4px 14px rgba(0,0,0,.07)}
+.w .ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:18px;margin-bottom:10px}
+.w h3{font-size:14px;font-weight:700}.w p{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+
+/* Rak buku */
+.shelf{padding:0 38px}
+.books{display:flex;align-items:flex-end;gap:3px;height:132px;overflow:hidden;border-bottom:0}
+.sp{flex:none;border-radius:3px 3px 0 0;position:relative;transform-origin:bottom;transition:transform .2s;box-shadow:inset -3px 0 0 rgba(0,0,0,.18),inset 2px 0 0 rgba(255,255,255,.15)}
+.sp::before{content:"";position:absolute;left:0;right:0;top:12%;height:5px;background:var(--gold);opacity:.85}
+.sp::after{content:"";position:absolute;left:25%;right:25%;bottom:14%;height:2px;background:rgba(255,255,255,.55)}
+.sp:hover{transform:translateY(-12px) rotate(-2deg)}
+.wood{height:16px;margin:0 -38px;background:linear-gradient(#a0703b,#6d4623);box-shadow:0 -2px 0 rgba(255,255,255,.25) inset,0 3px 6px rgba(0,0,0,.25)}
+.pad{height:20px}
+
+/* Dock */
+.dock{flex:none;display:flex;justify-content:center;padding:0 12px 10px}
+.dock div{display:flex;gap:10px;padding:8px 12px;border-radius:20px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px)}
+
+.dock .dockbtn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 26px;font-size:14px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.3);transition:transform .15s}
+.dock .dockbtn:hover{transform:translateY(-8px) scale(1.08)}
+
+/* Modal login */
+.overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(5,20,14,.45);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);z-index:10}
+.overlay.open{display:flex}
+.modal{width:100%;max-width:390px;border-radius:14px;overflow:hidden;background:rgba(248,245,236,.94);border:1px solid rgba(255,255,255,.6);
+  box-shadow:0 0 0 .5px rgba(0,0,0,.3),0 30px 80px rgba(0,0,0,.45);animation:pop .22s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{opacity:0;transform:scale(.94) translateY(8px)}}
+.modal .titlebar{background:rgba(255,255,255,.5)}
+.lights button{all:unset;display:block;width:12px;height:12px;border-radius:50%;background:#ff5f57;cursor:pointer;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.2)}
+.mb{padding:24px 30px 28px}
+.mhead{text-align:center;margin-bottom:18px}
+.mhead .icon{width:64px;height:64px;margin:0 auto 10px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(160deg,var(--green2),var(--deep));box-shadow:0 8px 18px rgba(14,42,33,.4),inset 0 1px 0 rgba(255,255,255,.3)}
+.mhead svg{width:34px;height:34px}
+.mhead h2{font-family:var(--serif);font-size:24px;color:var(--deep)}
+.mhead p{font-size:13px;color:var(--muted);margin-top:3px}
+.seg{display:flex;flex-wrap:wrap;background:rgba(0,0,0,.07);border-radius:9px;padding:2px;margin-bottom:14px}
+.seg button{all:unset;flex:1 0 auto;text-align:center;font-size:12.5px;padding:6px 8px;border-radius:7px;cursor:pointer;white-space:nowrap}
+.seg button[aria-checked="true"]{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);font-weight:600}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:0 0 5px 2px}
+.field{position:relative;margin-bottom:12px}
+.field input{width:100%;height:36px;padding:0 12px;font:inherit;font-size:14px;color:var(--ink);background:#fff;border:1px solid rgba(0,0,0,.15);border-radius:8px;outline:none;transition:box-shadow .15s,border-color .15s}
+.field select{width:100%;height:36px;padding:0 12px;font:inherit;font-size:14px;color:var(--ink);background:#fff;border:1px solid rgba(0,0,0,.15);border-radius:8px;outline:none;transition:box-shadow .15s,border-color .15s}
+.field input:focus,.field select:focus{border-color:var(--green2);box-shadow:0 0 0 4px rgba(47,138,103,.28)}
+.field input[hidden],.field select[hidden]{display:none}
+.eye{all:unset;position:absolute;right:8px;bottom:6px;width:24px;height:24px;display:grid;place-items:center;cursor:pointer;color:var(--muted);border-radius:6px}
+.eye svg{width:18px;height:18px}
+.row{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin:2px 0 16px}
+.chk{display:flex;align-items:center;gap:8px;margin:0;font-weight:400;color:var(--ink);cursor:pointer}
+.chk input{accent-color:var(--green);width:16px;height:16px;margin:0}
+a{color:var(--green);text-decoration:none}a:hover{text-decoration:underline}
+.go{width:100%;height:38px}
+.go[disabled]{opacity:.6;pointer-events:none}
+.msg{font-size:13px;text-align:center;margin-top:12px;min-height:18px;color:#c0392b}
+.shake{animation:shake .35s}@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;padding:26px 22px 20px}
+  .shelf{padding:0 22px}.wood{margin:0 -22px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="menubar">
+  <div class="l">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 4h6a2 2 0 0 1 2 2v14a3 3 0 0 0-3-3H4V4zm16 0h-6a2 2 0 0 0-2 2v14a3 3 0 0 1 3-3h5V4z"/></svg>
+    <b>PustakaGO</b>
+  </div>
+  <div class="r">
+    <span id="clock" class="dim">--:--</span>
+  </div>
+</header>
+
+<main>
+  <section class="window" aria-label="Beranda PustakaGO">
+    <div class="titlebar">
+      <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+      <span>PustakaGO — Beranda</span>
+    </div>
+
+    <div class="hero">
+      <div>
+        <div class="badge">
+          <span class="app"><svg viewBox="0 0 48 48" fill="none"><path d="M6 10c6-2 13-1 18 3v26c-5-4-12-5-18-3V10z" fill="#fff"/><path d="M42 10c-6-2-13-1-18 3v26c5-4 12-5 18-3V10z" fill="#fff" fill-opacity=".7"/></svg></span>
+          Perpustakaan Sekolah
+        </div>
+        <h1>Semua buku sekolah, dalam satu jendela.</h1>
+        <p class="lead">Cari koleksi, pinjam buku, dan kelola perpustakaan dari satu tempat. Siswa dan guru meminjam lebih cepat, pustakawan bekerja lebih rapi.</p>
+        <label class="spot" for="q"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="search" placeholder="Cari judul, penulis, atau kode buku" autocomplete="off"></label>
+      </div>
+
+      <div class="widgets" id="layanan">
+        <div class="w"><div class="ic" style="background:#e3f1ea">📚</div><h3>Katalog buku</h3><p>Cari dan lihat ketersediaan koleksi.</p></div>
+        <div class="w"><div class="ic" style="background:#fbeccd">🔖</div><h3>Peminjaman</h3><p>Catat pinjam, kembali, dan denda.</p></div>
+        <div class="w"><div class="ic" style="background:#f3dde1">👥</div><h3>Anggota</h3><p>Kelola data siswa dan guru.</p></div>
+        <div class="w"><div class="ic" style="background:#dfe6f3">🗂️</div><h3>Laporan dan arsip</h3><p>Rekap aktivitas dan pengadaan buku.</p></div>
+      </div>
+    </div>
+
+    <div class="shelf" aria-hidden="true"><div class="books" id="books"></div><div class="wood"></div></div>
+    <div class="pad"></div>
+  </section>
+</main>
+
+<nav class="dock" aria-label="Akses cepat"><div><button class="pill dockbtn" data-open>Login</button></div></nav>
+
+<!-- Modal login -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="mt" aria-hidden="true">
+  <div class="modal" id="modal">
+    <div class="titlebar">
+      <div class="lights"><button type="button" id="close" aria-label="Tutup"></button><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+      <span>Masuk</span>
+    </div>
+    <div class="mb">
+      <div class="mhead">
+        <div class="icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M6 10c6-2 13-1 18 3v26c-5-4-12-5-18-3V10z" fill="#fff"/><path d="M42 10c-6-2-13-1-18 3v26c5-4 12-5 18-3V10z" fill="#fff" fill-opacity=".7"/></svg></div>
+        <h2 id="mt">PustakaGO</h2>
+        <p>Masuk untuk meminjam atau mengelola perpustakaan</p>
+      </div>
+      <div class="seg" role="radiogroup" aria-label="Masuk sebagai">
+        <button type="button" role="radio" aria-checked="true" data-role="siswa">Siswa</button>
+        <button type="button" role="radio" aria-checked="false" data-role="guru">Guru</button>
+        <button type="button" role="radio" aria-checked="false" data-role="tendik">Tendik</button>
+        <button type="button" role="radio" aria-checked="false" data-role="eksternal">External</button>
+        <button type="button" role="radio" aria-checked="false" data-role="pustakawan">Pustakawan</button>
+      </div>
+      <form id="form" novalidate>
+        <div class="field"><label for="userSel" id="ul">Pilih Nama</label><input id="user" type="text" autocomplete="username" maxlength="100" hidden><select id="userSel"><option value="">Memuat daftar nama…</option></select></div>
+        <div class="field"><label for="pass" id="pl">NISN</label><input id="pass" type="password" autocomplete="current-password" placeholder="Masukkan NISN" maxlength="100" style="padding-right:38px">
+          <button type="button" class="eye" id="eye" aria-label="Tampilkan kata sandi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+        <div class="row"><label class="chk"><input type="checkbox" id="remember"> Ingat saya</label><a href="#" id="forgot">Lupa kata sandi?</a></div>
+        <button class="btn main go" type="submit" id="submit">Masuk</button>
+        <p class="msg" id="msg" role="alert" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+
+  // Jam
+  function tick(){var d=new Date();$('#clock').textContent=d.toLocaleDateString('id-ID',{weekday:'short',day:'numeric',month:'short'})+'  '+d.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}).replace('.',':')}
+  tick();setInterval(tick,15000);
+
+  // Rak buku (acak tetap, bukan data asli)
+  var cols=['#1f6b4f','#7a2e3a','#d9c9a0','#2c4a7a','#0e2a21','#a5702c','#3f7d63','#5a2a4a'];
+  var s=7,rnd=function(){s=(s*9301+49297)%233280;return s/233280};
+  var shelf=$('#books'),html='';
+  for(var i=0;i<46;i++){
+    var w=16+Math.floor(rnd()*16),h=70+Math.floor(rnd()*58),c=cols[Math.floor(rnd()*cols.length)];
+    html+='<i class="sp" style="width:'+w+'px;height:'+h+'px;background:'+c+'"></i>';
+  }
+  shelf.innerHTML=html;
+
+
+  // Modal
+  var ov=$('#overlay'),last=null;
+  function open(){last=document.activeElement;ov.classList.add('open');ov.setAttribute('aria-hidden','false');setTimeout(function(){$('#user').focus()},50)}
+  function close(){ov.classList.remove('open');ov.setAttribute('aria-hidden','true');$('#msg').textContent='';if(last)last.focus()}
+  document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',open)});
+  $('#close').addEventListener('click',close);
+  ov.addEventListener('mousedown',function(e){if(e.target===ov)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('open'))close()});
+
+  /* ===== AUTENTIKASI (Supabase) =====
+     Siswa, Guru, Tendik, External : dicocokkan ke tabel anggota_* (data yang sama dengan Data Anggota).
+     Pustakawan                    : dicocokkan ke tabel profil_perpustakaan (kolom username dan password).
+     Ubah kolom "to" bila nama halaman tujuan berbeda. */
+  var SBR='https://ncfuynsctxxxqiqbzptp.supabase.co/rest/v1/',
+      SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jZnV5bnNjdHh4eHFpcWJ6cHRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMzY1MzUsImV4cCI6MjEwMzcxMjUzNX0.Xy-u2FJuRiwhxOKndHe6suVrItHShGY7WM68bTk9VCk',
+      HD={apikey:SK,Authorization:'Bearer '+SK};
+  var AUTH={
+    siswa:     {label:'Pilih Nama',pick:1,list:'anggota_siswa',group:1,none:'siswa',pl:'NISN',pph:'Masukkan NISN',tb:'anggota_siswa',col:'id',pcol:'nisn',sel:'id,nama,nisn,kelas',tipe:'Siswa',to:'adminsiswa.html',
+                salah:'NISN tidak sesuai dengan nama yang dipilih.'},
+    guru:      {label:'Pilih Nama',pick:1,list:'anggota_guru',none:'guru',pl:'NIP / NIK',pph:'Masukkan NIP / NIK',tb:'anggota_guru',col:'id',pcol:'nip',sel:'id,nama,nip,tlp',tipe:'Guru',to:'adminguru.html',
+                salah:'NIP / NIK tidak sesuai dengan nama yang dipilih.'},
+    tendik:    {label:'Pilih Nama',pick:1,list:'anggota_tendik',none:'tenaga pendidik',pl:'NIP / NIK',pph:'Masukkan NIP / NIK',tb:'anggota_tendik',col:'id',pcol:'nip_nik',sel:'id,nama,nip_nik,jabatan,kontak,alamat',tipe:'Tenaga Kependidikan',to:'admintendik.html',
+                salah:'NIP / NIK tidak sesuai dengan nama yang dipilih.'},
+    eksternal: {label:'Pilih Nama',pick:1,list:'anggota_eksternal',none:'anggota eksternal',pl:'NIK',pph:'Masukkan NIK',tb:'anggota_eksternal',col:'id',pcol:'nik',sel:'id,nama,nik,instansi,kontak,alamat',tipe:'Eksternal',to:'eksternal.html',
+                salah:'NIK tidak sesuai dengan nama yang dipilih.'},
+    pustakawan:{label:'Username',ph:'Masukkan username',tb:'profil_perpustakaan',col:'username',pcol:'password',sel:'id,nama_perpustakaan,username',tipe:'Pustakawan',to:'adminpustakawan.html',
+                salah:'Username atau kata sandi salah.'}
+  };
+  var esc=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+  var nat=function(a,b){return String(a).localeCompare(String(b),'id',{numeric:true})};
+
+  function http(r){
+    if(r.ok)return r.json();
+    return r.text().then(function(t){var j={};try{j=JSON.parse(t)}catch(e){}var er=new Error(j.message||('HTTP '+r.status));er.status=r.status;er.code=j.code;throw er});
+  }
+  function errText(e){
+    if(!e||e.status==null)return'Tidak dapat terhubung ke server. Periksa koneksi internet.';
+    if(e.status===404||e.code==='PGRST205'||e.code==='PGRST202')return'Tabel atau fungsi login belum dibuat di Supabase. Jalankan script SQL terlebih dahulu.';
+    if(e.status===401||e.status===403||e.code==='42501')return'Akses ditolak oleh Supabase (RLS). Periksa policy tabel.';
+    return'Gagal masuk ('+e.message+'). Coba lagi.';
+  }
+
+  /* ===== DAFTAR NAMA (dropdown "Pilih Nama") — sumber: tabel anggota_siswa / anggota_guru, sama dengan halaman Data Anggota ===== */
+  var LS={},pendingId=null;
+  function fillList(r,rows){
+    var c=AUTH[r],sel=$('#userSel'),n=0,h='<option value="">— Pilih nama —</option>';
+    rows=rows.filter(function(x){return x.nama});n=rows.length;
+    if(!n){sel.innerHTML='<option value="">Belum ada '+c.none+' terdaftar</option>';sel.disabled=true;
+      $('#msg').textContent='Belum ada data '+c.none+'. Pustakawan perlu menambahkan '+c.none+' di Data Anggota.';return}
+    if(c.group){
+      var g={};
+      rows.forEach(function(x){var k=String(x.kelas||'').trim()||'Tanpa Kelas';(g[k]=g[k]||[]).push(x)});
+      Object.keys(g).sort(nat).forEach(function(k){
+        h+='<optgroup label="'+esc(k==='Tanpa Kelas'?k:'Kelas '+k)+'">'
+          +g[k].sort(function(x,y){return nat(x.nama,y.nama)}).map(function(x){return'<option value="'+esc(x.id)+'">'+esc(x.nama)+'</option>'}).join('')+'</optgroup>';
+      });
+    }else{
+      h+=rows.slice().sort(function(x,y){return nat(x.nama,y.nama)}).map(function(x){return'<option value="'+esc(x.id)+'">'+esc(x.nama)+'</option>'}).join('');
+    }
+    sel.innerHTML=h;sel.disabled=false;
+    if(pendingId&&sel.querySelector('option[value="'+pendingId.replace(/"/g,'')+'"]'))sel.value=pendingId;
+    pendingId=null;
+  }
+  function loadList(r){
+    var c=AUTH[r],sel=$('#userSel'),all=[],st=LS[r]=LS[r]||{state:'idle',rows:null};
+    st.state='loading';sel.disabled=true;sel.innerHTML='<option value="">Memuat daftar nama…</option>';
+    function page(off){
+      return fetch(SBR+c.list+'?select=id,nama'+(c.group?',kelas':'')+'&order=nama.asc&limit=1000&offset='+off,{headers:HD}).then(http)
+        .then(function(rows){all=all.concat(rows);return rows.length===1000?page(off+1000):all});
+    }
+    page(0).then(function(rows){st.state='ok';st.rows=rows;if(role===r)fillList(r,rows)}).catch(function(e){
+      st.state='err';
+      if(role!==r)return;
+      sel.disabled=false;sel.innerHTML='<option value="">Gagal memuat daftar nama</option>';
+      $('#msg').textContent=errText(e).replace(/ Coba lagi\.$/,'')+' Ketuk kolom nama untuk memuat ulang.';
+    });
+  }
+  /* gagal memuat: ketuk kolom nama untuk mencoba lagi */
+  ['mousedown','focus'].forEach(function(ev){$('#userSel').addEventListener(ev,function(){var st=LS[role];if(AUTH[role].pick&&st&&st.state==='err'){$('#msg').textContent='';loadList(role)}})});
+
+  // Peran
+  var role='siswa';
+  function setRole(r){
+    role=r;var c=AUTH[r];
+    document.querySelectorAll('.seg button').forEach(function(x){x.setAttribute('aria-checked',x.dataset.role===r?'true':'false')});
+    $('#ul').textContent=c.label;$('#ul').setAttribute('for',c.pick?'userSel':'user');
+    $('#user').hidden=!!c.pick;$('#userSel').hidden=!c.pick;$('#user').placeholder=c.ph||'';
+    $('#pl').textContent=c.pl||'Kata sandi';$('#pass').placeholder=c.pph||'Masukkan kata sandi';
+    $('#pass').value='';$('#msg').textContent='';
+    if(c.pick){var st=LS[r]=LS[r]||{state:'idle',rows:null};
+      if(st.state==='ok')fillList(r,st.rows);
+      else if(st.state==='idle'||st.state==='err')loadList(r);
+      else{$('#userSel').disabled=true;$('#userSel').innerHTML='<option value="">Memuat daftar nama…</option>'}}
+  }
+  document.querySelectorAll('.seg button').forEach(function(b){b.addEventListener('click',function(){setRole(b.dataset.role)})});
+
+  $('#eye').addEventListener('click',function(){var p=$('#pass'),sh=p.type==='password';p.type=sh?'text':'password';this.setAttribute('aria-label',sh?'Sembunyikan kata sandi':'Tampilkan kata sandi')});
+  /* "Ingat saya": menyimpan role + pilihan nama/identitas saja (NISN dan kata sandi tidak pernah disimpan) */
+  try{var sv=JSON.parse(localStorage.getItem('pustakago-user'));if(sv&&sv.user&&AUTH[sv.role]){
+    role=sv.role;if(AUTH[role].pick)pendingId=String(sv.user);else $('#user').value=sv.user;$('#remember').checked=true}}catch(e){}
+  setRole(role);
+  $('#forgot').addEventListener('click',function(e){e.preventDefault();$('#msg').textContent=role==='pustakawan'?'Hubungi administrator untuk mengatur ulang kata sandi.':AUTH[role].pick?'Hubungi pustakawan bila '+AUTH[role].pl+' Anda tidak dikenali.':'Hubungi pustakawan untuk mengatur ulang kata sandi.'});
+
+  function fail(t){$('#msg').style.color='';$('#msg').textContent=t;var m=$('#modal');m.classList.remove('shake');void m.offsetWidth;m.classList.add('shake')}
+
+  /* kembalikan baris pengguna (tanpa kolom password) atau null bila tidak cocok */
+  function verify(r,user,pass){
+    var c=AUTH[r];
+    if(c.rpc)return fetch(SBR+'rpc/'+c.rpc,{method:'POST',headers:Object.assign({'Content-Type':'application/json'},HD),body:JSON.stringify({p_username:user,p_password:pass})})
+      .then(http).then(function(a){return a&&a[0]||null});
+    return fetch(SBR+c.tb+'?select='+c.sel+'&'+c.col+'=eq.'+encodeURIComponent(user)+'&'+c.pcol+'=eq.'+encodeURIComponent(pass)+'&limit=1',{headers:HD})
+      .then(http).then(function(a){return a&&a[0]||null});
+  }
+
+  /* pembatas percobaan: 5 kali salah berturut-turut, tunggu 30 detik (hanya di halaman ini, bukan pengaman server) */
+  var fails=0,lockUntil=0;
+
+  $('#form').addEventListener('submit',async function(e){
+    e.preventDefault();
+    var c=AUTH[role],fld=c.pick?$('#userSel'):$('#user'),user=c.pick?fld.value:fld.value.trim(),pass=c.pick?$('#pass').value.trim():$('#pass').value;
+    var uMsg=c.pick?'Pilih nama':'Isi '+c.label,pLbl=c.pl||'kata sandi';
+    if(!user&&!pass){fail(c.pick?'Pilih nama dan isi '+c.pl+' terlebih dahulu.':'Isi '+c.label+' dan kata sandi terlebih dahulu.');fld.focus();return}
+    if(!user){fail(uMsg+' terlebih dahulu.');fld.focus();return}
+    if(!pass){fail('Isi '+pLbl+' terlebih dahulu.');$('#pass').focus();return}
+    if(user.length>100||pass.length>100){fail('Isian terlalu panjang (maksimal 100 karakter).');return}
+    var wait=Math.ceil((lockUntil-Date.now())/1000);
+    if(wait>0){fail('Terlalu banyak percobaan. Coba lagi dalam '+wait+' detik.');return}
+
+    var btn=$('#submit'),ok=false;btn.setAttribute('disabled','');btn.textContent='Memverifikasi…';
+    try{
+      var row=await verify(role,user,pass);
+      if(!row){
+        fails++;if(fails>=5){fails=0;lockUntil=Date.now()+30000;fail('Terlalu banyak percobaan. Coba lagi dalam 30 detik.')}
+        else fail(c.salah);
+        $('#pass').value='';$('#pass').focus();return;
+      }
+      fails=0;ok=true;
+      /* sesi dibaca halaman lain lewat sessionStorage 'pustakago_user' (nama / username dipakai untuk tampilan akun) */
+      var sess=Object.assign({},row,{role:role,tipe:c.tipe});
+      if(role==='pustakawan'&&!sess.nama)sess.nama=row.username;
+      if(!sess.username)sess.username=c.pick?(row.nisn||row.nip||row.nip_nik||row.nik||row.nama):user;
+      sessionStorage.setItem('pustakago_user',JSON.stringify(sess));
+      try{if($('#remember').checked)localStorage.setItem('pustakago-user',JSON.stringify({role:role,user:user}));else localStorage.removeItem('pustakago-user')}catch(x){}
+      $('#msg').style.color='#1f6b4f';$('#msg').textContent='Berhasil masuk. Mengalihkan…';
+      btn.textContent='Berhasil';
+      location.href=c.to;
+    }catch(err){fail(errText(err))}
+    finally{if(!ok){btn.removeAttribute('disabled');btn.textContent='Masuk'}}
+  });
+})();
+</script>
+</body>
+</html>
