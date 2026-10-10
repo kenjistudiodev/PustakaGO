@@ -134,7 +134,7 @@ td small.sub{display:block;font-size:11.5px;color:var(--muted)}
   <nav aria-label="Menu utama">
     <button class="d" id="openMenu" type="button" aria-haspopup="dialog"><span class="ic" style="background:linear-gradient(160deg,#4fb98a,#1f6b4f)" data-i="grid"></span>Menu</button>
     <button class="d" id="lap" type="button"><span class="ic" style="background:linear-gradient(160deg,#f0c877,#c98a1f)" data-i="chart"></span>Laporan</button>
-    <button class="d" id="out" type="button"><span class="ic" style="background:linear-gradient(160deg,#6b86b8,#3a5a8c)" data-i="back"></span>Scoria</button>
+    <button class="d" id="logout" type="button"><span class="ic" style="background:linear-gradient(160deg,#e8707a,#b8323f)" data-i="logout"></span>Log Out</button>
   </nav>
 </div>
 
@@ -167,7 +167,9 @@ td small.sub{display:block;font-size:11.5px;color:var(--muted)}
     school:'<path d="M3 10l9-6 9 6M5 10v9h14v-9M9 19v-5h6v5"/>',
     box:'<path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/>',
     backup:'<path d="M12 16V4M7 9l5-5 5 5M4 20h16"/>',
-    restore:'<path d="M3 12a9 9 0 109-9 9 9 0 00-7 3.500M3 4v5h5"/>'
+    restore:'<path d="M3 12a9 9 0 109-9 9 9 0 00-7 3.500M3 4v5h5"/>',
+    logout:'<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>',
+    pen:'<path d="M4 20l1-4L16.500 4.500a2.100 2.100 0 013 3L8 19zM14 7l3 3"/>'
   };
   var svg=function(n){return'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+P[n]+'</svg>'};
   document.querySelectorAll('[data-i]').forEach(function(e){e.innerHTML=svg(e.dataset.i)});
@@ -341,27 +343,18 @@ td small.sub{display:block;font-size:11.5px;color:var(--muted)}
   });
 
   /* Menu slide-up */
-  var M=[['Profil Perpustakaan','school','#2f8a67','prof'],['Data Anggota','users','#7a2e3a','ang'],['Daftar Buku','book','#c98a1f','buku'],['Peminjaman','loan','#3a5a8c','pin'],['Aset Perpustakaan','box','#8e6bbf','aset'],['Back Up &amp; Reset','backup','#d6453a','bak'],['Restore','restore','#2f95c9','res']];
+  var M=[['Profil Perpustakaan','school','#2f8a67','prof'],['Data Anggota','users','#7a2e3a','ang'],['Daftar Buku','book','#c98a1f','buku'],['Peminjaman','loan','#3a5a8c','pin'],['Aset Perpustakaan','box','#8e6bbf','aset'],['Karya Literasi Siswa','pen','#e0773c','lit'],['Back Up &amp; Reset','backup','#d6453a','bak'],['Restore','restore','#2f95c9','res']];
   $('#list').innerHTML=M.map(function(m){return'<button class="item" type="button" data-v="'+m[3]+'"><span class="ic" style="background:'+m[2]+'">'+svg(m[1])+'</span><span>'+m[0]+'</span></button>'}).join('');
   var root=$('#root'),btn=$('#openMenu');
   function openSheet(){root.classList.add('open');$('#sheet').setAttribute('aria-hidden','false');$('#closeMenu').focus()}
   function closeSheet(f){root.classList.remove('open');$('#sheet').setAttribute('aria-hidden','true');if(f!==false)btn.focus()}
   btn.addEventListener('click',openSheet);
   $('#scrim').addEventListener('click',closeSheet);$('#closeMenu').addEventListener('click',closeSheet);
-  $('#list').addEventListener('click',function(e){var b=e.target.closest('[data-v]');if(!b)return;var L={prof:'profilperpus.html',ang:'anggotaperpus.html',buku:'daftarbuku.html',pin:'peminjaman.html',aset:'asetperpus.html'};if(L[b.dataset.v]){location.href=L[b.dataset.v];return}closeSheet(false);go(b.dataset.v)});
+  $('#list').addEventListener('click',function(e){var b=e.target.closest('[data-v]');if(!b)return;var L={prof:'profilperpus.html',ang:'anggotaperpus.html',buku:'daftarbuku.html',pin:'peminjaman.html',aset:'asetperpus.html',lit:'karyaliterasi.html'};if(L[b.dataset.v]){location.href=L[b.dataset.v];return}closeSheet(false);go(b.dataset.v)});
   $('#lap').addEventListener('click',function(){go('lap')});
+  $('#logout').addEventListener('click',function(){try{sessionStorage.removeItem('pustakago_user')}catch(e){}location.href='index.html'});
   document.addEventListener('keydown',function(e){if(e.key!=='Escape')return;if($('#ov').classList.contains('on'))closeForm();else if(root.classList.contains('open'))closeSheet()});
 
-  /* Tombol Scoria: buka SCORIA di tab baru lalu tutup tab ini.
-     Browser hanya mengizinkan tab ditutup oleh skrip jika tab itu dibuka lewat skrip/tautan;
-     jika tidak, tab ini dialihkan ke SCORIA dan tab baru ditutup, jadi hasilnya tetap satu tab SCORIA. */
-  var SCORIA_URL='https://kenjistudiodev.github.io/Scoria/';
-  $('#out').addEventListener('click',function(){
-    var w=null;try{w=window.open(SCORIA_URL,'_blank')}catch(e){}
-    if(!w){location.href=SCORIA_URL;return}
-    window.close();
-    setTimeout(function(){try{w.close()}catch(e){}location.href=SCORIA_URL},400);
-  });
   try{var u=JSON.parse(sessionStorage.getItem('pustakago_user')),n=u&&(u.nama||u.username);if(n){$('#who').textContent=n;$('#av').textContent=n.trim().split(/\s+/).slice(0,2).map(function(w){return w[0]}).join('').toUpperCase()}}catch(e){}
   function applyProfil(){var p={};try{p=JSON.parse(localStorage.getItem('pustakago-profil'))||{}}catch(e){}$('.nm b').textContent=p.nama_perpustakaan||'PustakaGO'}
   window.addEventListener('pageshow',function(e){if(e.persisted){location.reload();return}applyProfil()});
