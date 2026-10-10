@@ -178,7 +178,7 @@ td small.sub{display:block;font-size:11.5px;color:var(--muted)}
         <div class="kdeco" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h6a2 2 0 0 1 2 2v14a3 3 0 0 0-3-3H4V4zm16 0h-6a2 2 0 0 0-2 2v14a3 3 0 0 1 3-3h5V4z"/></svg></div>
         <div class="k-top">
           <span class="k-logo" id="kLogo"><svg viewBox="0 0 24 24" fill="#fff"><path d="M4 4h6a2 2 0 0 1 2 2v14a3 3 0 0 0-3-3H4V4zm16 0h-6a2 2 0 0 0-2 2v14a3 3 0 0 1 3-3h5V4z"/></svg></span>
-          <div class="k-org"><b id="kOrg">Perpustakaan Sekolah</b><small id="kSch">PustakaGO</small></div>
+          <div class="k-org"><b id="kOrg">PustakaGO</b><small id="kSch">Perpustakaan Sekolah</small></div>
           <span class="k-badge">EKSTERNAL</span>
         </div>
         <div class="k-title">KARTU TANDA ANGGOTA PERPUSTAKAAN</div>
@@ -209,6 +209,7 @@ td small.sub{display:block;font-size:11.5px;color:var(--muted)}
     <button class="d" id="mBuku" type="button"><span class="ic" style="background:linear-gradient(160deg,#4fb98a,#1f6b4f)" data-i="book"></span>Daftar Koleksi Buku</button>
     <button class="d" id="mPinjam" type="button"><span class="ic" style="background:linear-gradient(160deg,#f0c877,#c98a1f)" data-i="history"></span>Riwayat Peminjaman</button>
     <button class="d" id="mBaca" type="button"><span class="ic" style="background:linear-gradient(160deg,#6b86b8,#3a5a8c)" data-i="read"></span>Baca Online</button>
+    <button class="d" id="mKarya" type="button"><span class="ic" style="background:linear-gradient(160deg,#f0a36b,#e0773c)" data-i="pen"></span>Karya Literasi</button>
     <button class="d" id="out" type="button"><span class="ic" style="background:linear-gradient(160deg,#e0707a,#a52c3b)" data-i="logout"></span>Log Out</button>
   </nav>
 </div>
@@ -231,7 +232,7 @@ td small.sub{display:block;font-size:11.5px;color:var(--muted)}
       SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jZnV5bnNjdHh4eHFpcWJ6cHRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMzY1MzUsImV4cCI6MjEwMzcxMjUzNX0.Xy-u2FJuRiwhxOKndHe6suVrItHShGY7WM68bTk9VCk',
       HD={apikey:SK,Authorization:'Bearer '+SK};
   /* Halaman tujuan menu footer: ubah bila nama file berbeda */
-  var MENU={buku:'koleksibuku.html',baca:'bacaonline.html'},LOGIN='index.html';
+  var MENU={buku:'koleksibuku.html',baca:'bacaonline.html',karya:'karyaliterasisiswa.html'},LOGIN='index.html';
 
   var P={
     user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.500-6.500 8-6.500s8 2.500 8 6.500"/>',
@@ -240,6 +241,7 @@ td small.sub{display:block;font-size:11.5px;color:var(--muted)}
     history:'<path d="M3 12a9 9 0 1 0 3-6.700M3 4v5h5M12 7v5l3 2"/>',
     book:'<path d="M4 4h6a2 2 0 012 2v14a3 3 0 00-3-3H4zM20 4h-6a2 2 0 00-2 2v14a3 3 0 013-3h5z"/>',
     read:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M9 8.500h6M9 11.500h4"/>',
+    pen:'<path d="M4 20l1-4L16.500 4.500a2.100 2.100 0 013 3L8 19zM14 7l3 3"/>',
     logout:'<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>',
     print:'<path d="M6 9V3h12v6M6 18H4a1 1 0 01-1-1v-6a2 2 0 012-2h14a2 2 0 012 2v6a1 1 0 01-1 1h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/>'
   };
@@ -290,7 +292,7 @@ td small.sub{display:block;font-size:11.5px;color:var(--muted)}
   /* Profil perpustakaan: nama + logo untuk navbar dan kartu */
   function applyProfil(p){
     var org=p.nama_perpustakaan;
-    if(org){$('.nm b').textContent=org;$('#kOrg').textContent=org}
+    if(org)$('.nm b').textContent=org; /* judul kartu tetap PustakaGO */
     if(p.nama_sekolah)$('#kSch').textContent=p.nama_sekolah;
     if(p.logo){var im=new Image();im.alt='';im.onload=function(){$('#kLogo').innerHTML='';$('#kLogo').appendChild(im)};im.src=p.logo}
   }
@@ -389,6 +391,7 @@ td small.sub{display:block;font-size:11.5px;color:var(--muted)}
   $('#mBuku').addEventListener('click',function(){location.href=MENU.buku});
   $('#mPinjam').addEventListener('click',openHist);
   $('#mBaca').addEventListener('click',function(){location.href=MENU.baca});
+  $('#mKarya').addEventListener('click',function(){location.href=MENU.karya});
   $('#out').addEventListener('click',logout);
   $('#print').addEventListener('click',function(){window.print()});
   window.addEventListener('pageshow',function(e){if(e.persisted){var s=null;try{s=JSON.parse(sessionStorage.getItem('pustakago_user'))}catch(x){}if(!s||s.role!=='eksternal')location.replace(LOGIN);else loadPin()}});
