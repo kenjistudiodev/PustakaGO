@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Karya Literasi Siswa — PustakaGO</title>
+<style>
+:root{
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --serif:ui-serif,"New York","Iowan Old Style",Georgia,serif;
+  --ink:#16251f;--muted:#5f6f67;--green:#1f6b4f;--green2:#2f8a67;--deep:#0e2a21;--gold:#d4a24c;--wine:#7a2e3a;
+  --line:rgba(0,0,0,.09);--track:rgba(120,120,128,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:calc(96px + env(safe-area-inset-bottom));
+  background:radial-gradient(70% 55% at 12% 10%,#2f8a67 0,transparent 65%),radial-gradient(60% 50% at 90% 20%,#8a6a2c 0,transparent 65%),radial-gradient(70% 60% at 60% 100%,#0b1f18 0,transparent 70%),#123a2c;background-attachment:fixed}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid rgba(212,162,76,.8);outline-offset:2px;border-radius:10px}
+
+/* Navbar */
+.nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:8px 10px;padding-top:calc(8px + env(safe-area-inset-top));color:#fff;
+  background:rgba(10,30,22,.6);backdrop-filter:saturate(180%) blur(24px);-webkit-backdrop-filter:saturate(180%) blur(24px);border-bottom:.5px solid rgba(255,255,255,.1)}
+button.brand{text-align:left;color:#fff}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff;background:linear-gradient(160deg,var(--green2),var(--deep));box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 2px 6px rgba(0,0,0,.3)}
+.logo svg{width:20px;height:20px}
+.nm{line-height:1.2;min-width:0}.nm b,.nm small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nm b{display:block;font-size:14px;font-weight:700}.nm small{display:block;font-size:11px;opacity:.75}
+.sp{flex:1}
+.acct{display:flex;align-items:center;gap:10px;padding:4px 6px 4px 12px;border-radius:99px;background:rgba(255,255,255,.14)}
+.acct div{text-align:right;line-height:1.2}.acct b{display:block;font-size:13px}.acct small{font-size:11px;opacity:.75}
+.avatar{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#2a1c05;background:linear-gradient(160deg,#f0c877,var(--gold))}
+
+/* Layout */
+.wrap{max-width:1100px;margin:0 auto;padding:22px 10px}
+.head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:10px;margin-bottom:18px;color:#fff}
+h1{font-family:var(--serif);font-size:clamp(28px,4.5vw,38px);letter-spacing:-.02em;line-height:1.1}
+.head p{opacity:.8;font-size:14px;margin-top:4px}
+.chip{font-size:13px;font-weight:600;padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.16)}
+.panel{background:rgba(246,241,228,.93);backdrop-filter:saturate(180%) blur(30px);-webkit-backdrop-filter:saturate(180%) blur(30px);border-radius:16px;box-shadow:0 14px 40px rgba(0,0,0,.28),0 0 0 .5px rgba(0,0,0,.14)}
+.box{padding:18px}.box h2{font-size:17px;margin-bottom:10px}
+.stats>*,.two>*{min-width:0}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:16px}
+.stat{padding:16px}
+.stat .ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:#fff;margin-bottom:10px}.stat .ic svg{width:18px;height:18px}
+.stat small{color:var(--muted);font-size:13px;display:block}
+.stat b{display:block;font-family:var(--serif);font-size:30px;line-height:1.1;color:var(--deep)}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.bars{display:flex;align-items:flex-end;gap:10px;height:170px}
+.bar{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.bar i{display:block;width:100%;max-width:36px;border-radius:6px 6px 2px 2px;background:linear-gradient(var(--green2),var(--green));min-height:3px;transition:height .8s cubic-bezier(.2,.8,.2,1)}
+.bar em{font-style:normal;color:var(--ink);font-weight:600;font-size:12px}
+.note{color:var(--muted);font-size:14px;margin-bottom:14px}
+.empty{padding:22px;text-align:center;color:var(--muted);font-size:14px}
+.tool{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.tool input{flex:1;min-width:180px;height:38px;padding:0 14px;border-radius:10px;border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.92);outline:none}
+.tool input:focus,.f input:focus,.f select:focus{border-color:var(--green2);box-shadow:0 0 0 4px rgba(47,138,103,.25)}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;height:38px;padding:0 18px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;font-size:14px;font-weight:600;color:#fff;background:linear-gradient(var(--green2),var(--green));box-shadow:0 1px 2px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.25)}
+.btn:hover{filter:brightness(1.06)}.btn:focus-visible{outline:3px solid rgba(212,162,76,.8)}
+.btn.alt{background:rgba(0,0,0,.08);color:var(--ink);box-shadow:none}
+.btn.sm{height:28px;padding:0 10px;font-size:12.5px}.btn.red{background:none;color:var(--wine);box-shadow:none}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.tw::-webkit-scrollbar{height:8px}.tw::-webkit-scrollbar-thumb{background:rgba(0,0,0,.28);border-radius:9px}.tw::-webkit-scrollbar-track{background:transparent}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:540px}
+th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:12px 16px;border-bottom:1px solid var(--line)}
+td{padding:11px 16px;border-bottom:1px solid rgba(0,0,0,.05)}tr:last-child td{border:0}
+td.act{text-align:right;white-space:nowrap}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px}
+td small.sub{display:block;font-size:11.5px;color:var(--muted)}
+.t-ok{background:#dcefe5;color:#1b5e44}.t-late{background:#f6dadd;color:#8a2432}.t-done{background:#e9e7df;color:#5f6f67}
+
+/* Dock footer */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom);background:rgba(255,255,255,.84);backdrop-filter:saturate(180%) blur(30px);-webkit-backdrop-filter:saturate(180%) blur(30px);border-top:.5px solid rgba(0,0,0,.1);box-shadow:0 -4px 20px rgba(0,0,0,.18)}
+.dock nav{width:100%;display:flex;justify-content:flex-start;gap:6px;padding:8px 10px;overflow-x:auto}
+.dock nav>:first-child{margin-left:auto}.dock nav>:last-child{margin-right:auto}
+.d{flex:none}
+.d{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:84px;padding:8px 14px;border-radius:16px;font-size:12px;font-weight:600;color:var(--ink);transition:background .15s,transform .15s}
+.d:hover{background:var(--track);transform:translateY(-3px)}
+.d .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:#fff;box-shadow:0 3px 8px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.35)}
+.d .ic svg{width:21px;height:21px}
+
+.toast{max-width:calc(100% - 20px);text-align:center;position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:var(--deep);color:#fff;padding:9px 16px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:70}
+.toast.on{opacity:1}
+.d.on{background:var(--track)}
+.tool{align-items:center}
+.tool select{height:38px;padding:0 12px;border-radius:10px;border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.92);outline:none}
+.tool select:focus{border-color:var(--green2);box-shadow:0 0 0 4px rgba(47,138,103,.25)}
+.pill{height:38px;padding:0 14px;border-radius:10px;font-size:13.5px;font-weight:600;color:#fff;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25)}
+.pill[aria-pressed="true"]{background:linear-gradient(var(--green2),var(--green));border-color:transparent;box-shadow:0 1px 2px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.25)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.grid>*{min-width:0}
+.card{display:flex;flex-direction:column;overflow:hidden;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-3px);box-shadow:0 18px 44px rgba(0,0,0,.32),0 0 0 .5px rgba(0,0,0,.14)}
+.cv{position:relative;display:flex;align-items:flex-end;justify-content:space-between;height:84px;padding:12px 14px;color:#fff}
+.cv .ci{position:absolute;right:12px;top:10px;opacity:.28}.cv .ci svg{width:52px;height:52px}
+.cv .tag{position:relative;background:rgba(255,255,255,.9);color:var(--deep)}
+.cb{display:flex;flex-direction:column;gap:8px;flex:1;padding:14px 16px 16px}
+.cb h3{font-family:var(--serif);font-size:19px;line-height:1.25;color:var(--deep);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cb p{font-size:13.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.au{display:flex;align-items:center;gap:10px;padding-top:10px;border-top:1px solid var(--line)}
+.au .avatar{flex:none;width:32px;height:32px}
+.au b{display:block;font-size:13px;line-height:1.25}.au small{display:block;font-size:11.5px;color:var(--muted)}
+.cb .btn{align-self:flex-start;height:32px;font-size:13px}
+.more{display:flex;justify-content:center;margin-top:18px}
+.sk{height:262px;border-radius:16px;background:linear-gradient(100deg,rgba(255,255,255,.1) 30%,rgba(255,255,255,.22) 50%,rgba(255,255,255,.1) 70%);background-size:200% 100%;animation:sh 1.3s infinite linear}
+@keyframes sh{to{background-position:-200% 0}}
+.state{padding:34px 20px;text-align:center}.state b{display:block;font-family:var(--serif);font-size:20px;color:var(--deep);margin-bottom:4px}.state p{color:var(--muted);font-size:14px;margin-bottom:14px}
+.overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:10px;background:rgba(5,20,14,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:60}
+.overlay.on{display:flex}
+.modal{position:relative;width:100%;max-width:720px;max-height:calc(100% - 20px);overflow:auto;border-radius:18px;background:rgba(248,245,236,.98);box-shadow:0 0 0 .5px rgba(0,0,0,.3),0 30px 80px rgba(0,0,0,.45);animation:pop .22s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{opacity:0;transform:scale(.95) translateY(8px)}}
+.mv{position:relative;padding:22px 20px 16px;color:#fff}
+.mv .tag{background:rgba(255,255,255,.9);color:var(--deep);margin-bottom:10px}
+.mv h2{font-family:var(--serif);font-size:24px;line-height:1.2;padding-right:36px}
+.mx{position:absolute;right:12px;top:12px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.28);color:#fff;font-size:20px;line-height:1}
+.mx:hover{background:rgba(255,255,255,.45)}
+.pv{position:relative;display:grid;place-items:center;min-height:140px;background:#e6e2d4;border-bottom:1px solid var(--line)}
+.pv a{display:block;line-height:0;cursor:zoom-in}
+.pv img{display:none;max-width:100%;max-height:min(60vh,520px);object-fit:contain;margin:0 auto}
+.pv.ok img{display:block}
+.pvn{padding:30px 16px;font-size:13px;color:var(--muted);text-align:center}
+.pv.ok .pvn{display:none}
+.pvf{display:block;width:100%;height:min(60vh,520px);border:0;background:#fff}
+.mb{padding:18px 20px 20px}
+.mb .au{border:0;padding:0 0 14px}
+.mb .sum{white-space:pre-wrap;font-size:15px;line-height:1.6;margin-bottom:16px}
+.mb .none{color:var(--muted);font-style:italic}
+.mb .meta{font-size:12.5px;color:var(--muted);margin-bottom:12px}
+@media (max-width:520px){.acct div{display:none}.acct{padding:3px}.nm small{display:none}.d{flex:1 1 0;min-width:0;padding:6px 2px;font-size:11px;line-height:1.2;text-align:center}.dock nav{gap:2px;padding:6px 5px}.wrap{padding:16px 10px}.grid{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <button class="brand" id="home" type="button" aria-label="Ke beranda">
+    <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h6a2 2 0 0 1 2 2v14a3 3 0 0 0-3-3H4V4zm16 0h-6a2 2 0 0 0-2 2v14a3 3 0 0 1 3-3h5V4z"/></svg></span>
+    <span class="nm"><b id="navName">PustakaGO</b><small>Perpustakaan Sekolah</small></span>
+  </button>
+  <span class="sp"></span>
+  <div class="acct" aria-label="Akun masuk"><div><b id="who">Siswa</b><small>Siswa</small></div><span class="avatar" id="av">S</span></div>
+</header>
+
+<main class="wrap">
+  <div class="head"><div><h1>Karya Literasi Siswa</h1><p>Baca cerpen, puisi, esai, dan karya tulis siswa</p></div><span class="chip" id="cnt">Memuat…</span></div>
+  <div class="tool">
+    <input id="q" type="search" placeholder="Cari judul, penulis, atau kelas" aria-label="Cari karya">
+    <select id="fj" aria-label="Filter jenis karya"><option value="">Semua jenis</option></select>
+    <button class="pill" id="mine" type="button" aria-pressed="false">Karya saya</button>
+  </div>
+  <section id="grid" class="grid" aria-live="polite"></section>
+  <div class="more" id="more" hidden><button class="btn" id="moreBtn" type="button">Tampilkan lebih banyak</button></div>
+</main>
+
+<div class="dock">
+  <nav aria-label="Menu utama">
+    <button class="d" id="bBeranda" type="button"><span class="ic" style="background:linear-gradient(160deg,#4fb98a,#1f6b4f)" data-i="home"></span>Beranda</button>
+    <button class="d on" id="bKarya" type="button" aria-current="page"><span class="ic" style="background:linear-gradient(160deg,#f0a36b,#e0773c)" data-i="pen"></span>Karya Literasi</button>
+    <button class="d" id="out" type="button"><span class="ic" style="background:linear-gradient(160deg,#e0707a,#a52c3b)" data-i="logout"></span>Log Out</button>
+  </nav>
+</div>
+
+<div class="overlay" id="ov" role="dialog" aria-modal="true" aria-labelledby="mTitle"><div class="modal" id="md"></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+  var HOMES={siswa:'adminsiswa.html',guru:'adminguru.html',tendik:'admintendik.html',eksternal:'eksternal.html'},LOGIN='index.html',HOME=LOGIN;
+
+  /* ===== SESI: siswa, guru, tenaga kependidikan, atau anggota eksternal yang sudah login ===== */
+  var U=null;try{U=JSON.parse(sessionStorage.getItem('pustakago_user'))}catch(e){}
+  if(!U||!U.id||!HOMES[U.role]){location.replace(LOGIN);return}
+  HOME=HOMES[U.role];
+  if(U.role!=='siswa')$('#mine').hidden=true; /* "Karya saya" hanya untuk siswa penulis */
+  function logout(){try{sessionStorage.removeItem('pustakago_user')}catch(e){}location.replace(LOGIN)}
+
+  var P={
+    home:'<path d="M3 11l9-7 9 7M5 9.500V20h14V9.500M10 20v-6h4v6"/>',
+    pen:'<path d="M4 20l1-4L16.500 4.500a2.100 2.100 0 013 3L8 19zM14 7l3 3"/>',
+    book:'<path d="M4 4h6a2 2 0 012 2v14a3 3 0 00-3-3H4zM20 4h-6a2 2 0 00-2 2v14a3 3 0 013-3h5z"/>',
+    logout:'<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>'
+  };
+  var svg=function(n){return'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+P[n]+'</svg>'};
+  document.querySelectorAll('[data-i]').forEach(function(e){e.innerHTML=svg(e.dataset.i)});
+  var esc=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+  var safeUrl=function(u){return/^https?:\/\//i.test(u||'')?u:''};
+  var ini=function(n){return String(n||'?').trim().split(/\s+/).slice(0,2).map(function(w){return w[0]}).join('').toUpperCase()};
+  function fmt(s){return s?new Date(String(s).slice(0,10)+'T00:00:00').toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'-'}
+  function toast(t){var e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove('on')},2800)}
+
+  /* ===== SUPABASE: tabel karya_literasi (hanya yang berstatus Dipublikasikan) ===== */
+  var SBR='https://ncfuynsctxxxqiqbzptp.supabase.co/rest/v1/',
+      SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jZnV5bnNjdHh4eHFpcWJ6cHRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMzY1MzUsImV4cCI6MjEwMzcxMjUzNX0.Xy-u2FJuRiwhxOKndHe6suVrItHShGY7WM68bTk9VCk',
+      HD={apikey:SK,Authorization:'Bearer '+SK},CK='pustakago-karya-publik',
+      COLS='id,judul,nama_siswa,kelas,nisn,jenis,tanggal,ringkasan,link,created_at';
+  function pull(){
+    var all=[];
+    function page(off){
+      return fetch(SBR+'karya_literasi?select='+COLS+'&status=eq.Dipublikasikan&order=tanggal.desc,created_at.desc&limit=1000&offset='+off,{headers:HD})
+        .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+        .then(function(rows){all=all.concat(rows);return rows.length===1000?page(off+1000):all});
+    }
+    return page(0);
+  }
+
+  var L=[],state='loading',q='',fj='',mine=false,shown=24,STEP=24;
+  try{var c=JSON.parse(localStorage.getItem(CK));if(Array.isArray(c)&&c.length){L=c;state='ok'}}catch(e){}
+  var JENIS=['Cerpen','Puisi','Pantun','Esai','Resensi Buku','Artikel','Komik','Lainnya'];
+  var GR={'Cerpen':['#4fb98a','#1f6b4f'],'Puisi':['#d6606f','#7a2e3a'],'Pantun':['#f0c877','#c98a1f'],'Esai':['#6b86b8','#3a5a8c'],
+          'Resensi Buku':['#a98ad6','#5b3f94'],'Artikel':['#4fb0dc','#1d6a96'],'Komik':['#f0a36b','#e0773c'],'Lainnya':['#8a9a92','#55655d']};
+  var grad=function(j){var g=GR[j]||GR.Lainnya;return'linear-gradient(135deg,'+g[0]+','+g[1]+')'};
+  var icon=function(j){return svg(j==='Resensi Buku'?'book':'pen')};
+
+  function isMine(x){
+    var nm=String(U.nama||'').trim().toLowerCase();
+    return (U.nisn&&x.nisn&&String(U.nisn)===String(x.nisn))||(nm&&String(x.nama_siswa||'').trim().toLowerCase()===nm);
+  }
+  function list(){
+    var t=q.toLowerCase().split(/\s+/).filter(Boolean);
+    return L.filter(function(x){
+      if(fj&&x.jenis!==fj)return false;
+      if(mine&&!isMine(x))return false;
+      var h=[x.judul,x.nama_siswa,x.kelas,x.jenis].join(' ').toLowerCase();
+      return t.every(function(w){return h.indexOf(w)>-1});
+    });
+  }
+  function fillJenis(){
+    var seen={};JENIS.forEach(function(j){seen[j]=1});
+    var ex=L.map(function(x){return x.jenis}).filter(function(j){if(!j||seen[j])return false;seen[j]=1;return true});
+    $('#fj').innerHTML='<option value="">Semua jenis</option>'+JENIS.concat(ex).map(function(j){return'<option'+(j===fj?' selected':'')+'>'+esc(j)+'</option>'}).join('');
+  }
+
+  function card(x){
+    var lk=safeUrl(x.link);
+    return'<article class="panel card"><div class="cv" style="background:'+grad(x.jenis)+'"><span class="ci" aria-hidden="true">'+icon(x.jenis)+'</span><span class="tag">'+esc(x.jenis)+'</span></div>'
+      +'<div class="cb"><h3>'+esc(x.judul)+'</h3>'
+      +'<p>'+(x.ringkasan?esc(x.ringkasan):'<i>Belum ada ringkasan.</i>')+'</p>'
+      +'<div class="au"><span class="avatar">'+esc(ini(x.nama_siswa))+'</span><div><b>'+esc(x.nama_siswa)+'</b><small>'+esc(x.kelas||'Tanpa kelas')+' · '+fmt(x.tanggal)+'</small></div></div>'
+      +'<button class="btn" type="button" data-id="'+esc(x.id)+'">'+(lk?'Lihat karya':'Baca selengkapnya')+'</button></div></article>';
+  }
+  function render(){
+    var g=$('#grid'),more=$('#more');more.hidden=true;
+    if(state==='loading'){g.innerHTML='<div class="sk"></div><div class="sk"></div><div class="sk"></div>';$('#cnt').textContent='Memuat…';return}
+    if(state==='fail'){
+      g.innerHTML='<div class="panel state" style="grid-column:1/-1"><b>Karya belum bisa dimuat</b><p>Periksa sambungan internet atau izin akses tabel karya_literasi di Supabase.</p><button class="btn" type="button" id="retry">Coba lagi</button></div>';
+      $('#cnt').textContent='Gagal memuat';return;
+    }
+    var r=list();$('#cnt').textContent=r.length.toLocaleString('id-ID')+' karya';
+    if(!r.length){
+      g.innerHTML='<div class="panel state" style="grid-column:1/-1"><b>'+(L.length?'Tidak ada karya yang cocok':'Belum ada karya')+'</b><p>'+(L.length?'Coba kata kunci, jenis, atau filter lain.':'Karya literasi siswa yang sudah dipublikasikan akan tampil di sini.')+'</p></div>';
+      return;
+    }
+    g.innerHTML=r.slice(0,shown).map(card).join('');
+    more.hidden=r.length<=shown;
+  }
+
+  /* ===== PRATINJAU karya dari kolom link: gambar langsung, Google Drive, atau PDF ===== */
+  function pvInfo(u){
+    var m;
+    if(/^https?:\/\/(drive|docs)\.google\.com\//i.test(u)&&((m=u.match(/\/d\/([\w-]{10,})/))||(m=u.match(/[?&]id=([\w-]{10,})/))))return{k:'drive',id:m[1]};
+    if(/\.(jpe?g|png|gif|webp|avif|bmp|svg)([?#]|$)/i.test(u))return{k:'img',src:u};
+    if(/\.pdf([?#]|$)/i.test(u))return{k:'pdf',src:u};
+    return null;
+  }
+  function pvHtml(u){
+    var p=u&&pvInfo(u);if(!p)return'';
+    if(p.k==='pdf')return'<div class="pv ok"><iframe class="pvf" src="'+esc(p.src)+'" title="Pratinjau karya"></iframe></div>';
+    var src=p.k==='drive'?'https://drive.google.com/thumbnail?id='+p.id+'&sz=w1600':p.src;
+    return'<div class="pv" id="pv" data-k="'+p.k+'" data-id="'+esc(p.id||'')+'"><span class="pvn">Memuat pratinjau…</span>'
+      +'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer" aria-label="Buka gambar ukuran penuh"><img id="pvImg" alt="Pratinjau karya" referrerpolicy="no-referrer" src="'+esc(src)+'"></a></div>';
+  }
+  function bindPv(){
+    var im=$('#pvImg'),pv=$('#pv');if(!im||!pv)return;
+    im.onload=function(){pv.classList.add('ok')};
+    im.onerror=function(){
+      if(pv.dataset.k==='drive'&&pv.dataset.id){
+        pv.innerHTML='<iframe class="pvf" src="https://drive.google.com/file/d/'+encodeURIComponent(pv.dataset.id)+'/preview" title="Pratinjau karya" allow="autoplay"></iframe>';
+        pv.classList.add('ok');
+      }else pv.querySelector('.pvn').textContent='Pratinjau tidak tersedia. Gunakan tombol Buka file karya.';
+    };
+    if(im.complete&&im.naturalWidth)pv.classList.add('ok');
+  }
+
+  /* ===== DETAIL ===== */
+  function open(id){
+    var x=L.filter(function(i){return String(i.id)===String(id)})[0];if(!x)return;
+    var lk=safeUrl(x.link);
+    $('#md').innerHTML='<div class="mv" style="background:'+grad(x.jenis)+'"><span class="tag">'+esc(x.jenis)+'</span><h2 id="mTitle">'+esc(x.judul)+'</h2><button class="mx" id="mx" type="button" aria-label="Tutup">&times;</button></div>'
+      +pvHtml(lk)+'<div class="mb"><div class="au"><span class="avatar">'+esc(ini(x.nama_siswa))+'</span><div><b>'+esc(x.nama_siswa)+'</b><small>'+esc(x.kelas||'Tanpa kelas')+'</small></div></div>'
+      +'<div class="meta">Dipublikasikan '+fmt(x.tanggal)+'</div>'
+      +(x.ringkasan?'<div class="sum">'+esc(x.ringkasan)+'</div>':'<div class="sum none">Belum ada ringkasan untuk karya ini.</div>')
+      +(lk?'<a class="btn" href="'+esc(lk)+'" target="_blank" rel="noopener noreferrer">Buka file karya</a>':'')+'</div>';
+    $('#ov').classList.add('on');$('#mx').focus();
+    $('#mx').onclick=close;bindPv();
+  }
+  function close(){$('#ov').classList.remove('on');$('#md').innerHTML=''}
+  $('#ov').addEventListener('mousedown',function(e){if(e.target===this)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+
+  /* ===== EVENT ===== */
+  $('#grid').addEventListener('click',function(e){
+    if(e.target.closest('#retry'))return start();
+    var b=e.target.closest('[data-id]');if(b)open(b.dataset.id);
+  });
+  $('#q').addEventListener('input',function(){q=this.value.trim();shown=STEP;render()});
+  $('#fj').addEventListener('change',function(){fj=this.value;shown=STEP;render()});
+  $('#mine').addEventListener('click',function(){mine=!mine;this.setAttribute('aria-pressed',mine);shown=STEP;render()});
+  $('#moreBtn').addEventListener('click',function(){shown+=STEP;render()});
+  $('#home').addEventListener('click',function(){location.href=HOME});
+  $('#bBeranda').addEventListener('click',function(){location.href=HOME});
+  $('#bKarya').addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  $('#out').addEventListener('click',logout);
+
+  /* ===== PROFIL & MUAT DATA ===== */
+  var n=U.nama||'Siswa';$('#who').textContent=n;$('#av').textContent=ini(n);
+  function applyProfil(){var p={};try{p=JSON.parse(localStorage.getItem('pustakago-profil'))||{}}catch(e){}$('#navName').textContent=p.nama_perpustakaan||'PustakaGO'}
+  function start(){
+    if(!L.length){state='loading';render()}
+    pull().then(function(r){L=r;state='ok';try{localStorage.setItem(CK,JSON.stringify(L))}catch(e){}})
+      .catch(function(){if(!L.length)state='fail';else toast('Gagal memperbarui, menampilkan data tersimpan.')})
+      .then(function(){fillJenis();render()});
+  }
+  window.addEventListener('pageshow',function(e){
+    if(e.persisted){var s=null;try{s=JSON.parse(sessionStorage.getItem('pustakago_user'))}catch(x){}if(!s||!HOMES[s.role])location.replace(LOGIN)}
+    applyProfil();
+  });
+  applyProfil();fillJenis();render();start();
+})();
+</script>
+</body>
+</html>
